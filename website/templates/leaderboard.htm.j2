@@ -1,0 +1,58 @@
+{% extends "base/body.htm.j2" %}
+
+
+{% set page_title = "TCK - Leaderboard" %}
+{% set css_files = ["/css/leaderboard.css"] %}
+{% set current_page_url = "leaderboard" %}
+
+
+{%- macro create_rank(name, place, points) -%}
+    <li class="rank">
+        <div class="user-info">
+            <p class="place">{{ place }}</p>
+            <p class="name">{{ name }}</p>
+        </div>
+        <div>
+            <p class="points">{{ points }}</p>
+        </div>
+    </li>
+{%- endmacro -%}
+
+
+{%- block content -%}
+<div class="leaders">
+    <div class="leader first">
+        <img src="https://picsum.photos/200" class="leader-icon" />
+        <div class="leader-info">
+            <p class="name">Name</p>
+            <p class="points">696969</p>
+            <p class="place">1st Place</p>
+        </div>
+    </div>
+    <div class="leader second">
+        <img src="https://picsum.photos/200" class="leader-icon" />
+        <div class="leader-info">
+            <p class="name">Name</p>
+            <p class="points">696969</p>
+            <p class="place">2nd Place</p>
+        </div>
+    </div>
+    <div class="leader third">
+        <img src="https://picsum.photos/200" class="leader-icon" />
+        <div class="leader-info">
+            <p class="name">Name</p>
+            <p class="points">696969</p>
+            <p class="place">3rd Place</p>
+        </div>
+    </div>
+</div>
+<ul class="ranks">
+    {{ create_rank("Name", 4, 696969) }}
+    {{ create_rank("Name", 5, 696969) }}
+    {{ create_rank("Name", 6, 696969) }}
+    {{ create_rank("Name", 7, 696969) }}
+    {{ create_rank("Name", 8, 696969) }}
+    {{ create_rank("Name", 9, 696969) }}
+    {{ create_rank("Name", 10, 696969) }}
+</ul>
+{%- endblock content -%}

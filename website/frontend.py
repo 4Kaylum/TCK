@@ -9,6 +9,13 @@ routes = RouteTableDef()
 
 
 @routes.get("/")
+@routes.get("/index")
 @template("index.htm.j2")
 async def index(request: Request):
-    return
+    return {}
+
+
+@routes.get("/leaderboard")
+@template("leaderboard.htm.j2")
+async def leaderboard(request: Request):
+    return {}
