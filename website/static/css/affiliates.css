@@ -1,3 +1,18 @@
+#filters {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#filters p {
+    margin: 0 10px;
+    display: inline;
+}
+
+#filters p:last-of-type {
+    margin: 0 0 0 10px;
+}
+
 .affiliate {
     display: flex;
     flex-direction: column;

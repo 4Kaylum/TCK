@@ -7,7 +7,7 @@
 
 
 {%- macro create_affiliate(image_url, perks, subtext, code, link, tags) -%}
-<div class="affiliate">
+<div class="affiliate" data-tags="{{ ','.join(tags) }}">
     <img class="logo" src="{{ static(image_url) }}" />
     <div class="affiliate-block">
         <p class="perks">{{ perks }}</p>
@@ -28,6 +28,12 @@
 
 
 {%- block content -%}
+<div id="filters">
+    <input type="checkbox" data-filter="Crypto" onchange="updateVisibleAffiliates()" checked /><p>Crypto</p>
+    <input type="checkbox" data-filter="CS:GO" onchange="updateVisibleAffiliates()" checked /><p>CS:GO</p>
+    <input type="checkbox" data-filter="Slots" onchange="updateVisibleAffiliates()" checked /><p>Slots</p>
+    <input type="checkbox" data-filter="Case Opening" onchange="updateVisibleAffiliates()" checked /><p>Case Opening</p>
+</div>
 {{
     create_affiliate(
         "/images/affiliates/stake.png",
@@ -157,4 +163,5 @@
         ],
     )
 }}
+<script type="text/javascript" src="{{ static('/js/index.js') }}"></script>
 {%- endblock content -%}
