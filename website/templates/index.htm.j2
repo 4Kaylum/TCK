@@ -1,0 +1,75 @@
+{% extends "base/body.htm.j2" %}
+
+
+{% set page_title = "TCK - Affiliates" %}
+{% set css_files = ["/css/affiliates.css"] %}
+{% set current_page_url = "index" %}
+
+
+{%- macro create_affiliate(image_url, perks, subtext, code, link, tags) -%}
+<div class="affiliate">
+    <img class="logo" src="{{ static(image_url) }}" />
+    <div class="affiliate-block">
+        <p class="perks">{{ perks }}</p>
+        <p class="subtext">{{ subtext }}</p>
+        <div class="claim-button">
+            <p class="code">{{ code }}</p>
+            <p class="button">Claim</p>
+        </div>
+        <p class="link">{{ link }}</p>
+        <ul class="tags">
+            {% for t in tags %}
+                <li>{{ t }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{%- endmacro -%}
+
+
+{%- block content -%}
+{{
+    create_affiliate(
+        "/images/affiliates/stake.png",
+        "10% rakeback and VIP rewards",
+        "No requirements",
+        "TCK",
+        "stake.com/r/tck",
+        [
+            "Slots",
+            "Live Games",
+            "Crypto",
+        ],
+    )
+}}
+{{
+    create_affiliate(
+        "/images/affiliates/csgo_rail.png",
+        "10% rakeback and VIP rewards",
+        "No requirements",
+        "TCK",
+        "stake.com/r/tck",
+        [
+            "Roulette",
+            "Case Opening",
+            "Crypto",
+            "Coinflip",
+        ],
+    )
+}}
+{{
+    create_affiliate(
+        "/images/affiliates/csgo_empire.png",
+        "10% rakeback and VIP rewards",
+        "No requirements",
+        "TCK",
+        "stake.com/r/tck",
+        [
+            "Roulette",
+            "Coinflip",
+            "Crypto",
+            "Sports Betting",
+        ],
+    )
+}}
+{%- endblock content -%}

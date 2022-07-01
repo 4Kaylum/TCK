@@ -1,0 +1,15 @@
+{%- from "base/head.htm.j2" import add_head -%}
+{%- from "base/header.htm.j2" import add_header -%}
+{%- from "base/footer.htm.j2" import add_footer -%}
+
+<!DOCTYPE html>
+<html>
+{{ add_head(page_title, css_files) }}
+<body>
+{{ add_header(current_page_url) }}
+<div id="content">
+{%- block content -%}{%- endblock content -%}
+</div>
+{{ add_footer() }}
+</body>
+</html>

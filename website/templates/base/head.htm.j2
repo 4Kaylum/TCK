@@ -1,0 +1,19 @@
+{%- macro add_head(page_title, css_files) -%}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ static('/css/main.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ static('/css/footer.css') }}" />
+    {%- if css_files -%}
+        {%- for file in css_files -%}
+            <link rel="stylesheet" type="text/css" href="{{ static(file) }}" />
+        {%- endfor -%}
+    {%- endif -%}
+</head>
+{%- endmacro -%}

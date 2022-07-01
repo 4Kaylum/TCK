@@ -1,0 +1,86 @@
+.affiliate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.affiliate .logo {
+    height: 50px;
+    align-self: center;
+    margin-top: 20px;
+    z-index: 10;
+}
+
+.affiliate-block {
+    background: var(--secondary-blue);
+    width: 600px;
+    margin-top: -20px;
+    z-index: 0;
+    padding-top: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+}
+
+.affiliate-block p {
+    margin: 2px 0;
+}
+
+.affiliate-block .subtext {
+    color: var(--primary-blue);
+}
+
+.affiliate-block .claim-button {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-content: center;
+    border-radius: 20px;
+}
+
+.affiliate-block .claim-button .code {
+    background: black;
+    padding: 10px 30px;
+    border-radius: 20px 0 0 20px;
+}
+
+.affiliate-block .claim-button .button {
+    background: var(--primary-blue);
+    padding: 10px 60px;
+    border-radius: 0 20px 20px 0;
+}
+
+.affiliate-block .link {
+    color: gray;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.affiliate-block .tags {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    width: calc(100% - 100px);
+    padding: 0;
+    background: var(--primary-blue);
+    padding: 10px 50px;
+    margin-top: 15px;
+    justify-content: space-evenly;
+    border-radius: 0 0 30px 30px;
+    font-size: 0.85rem;
+}
+
+@media screen and (max-width: 1100px) {
+    .affiliate {
+        width: 100%;
+    }
+    .affiliate-block {
+        width: 100%;
+        padding-bottom:10px;
+    }
+    .affiliate-block .tags {
+        display: none;
+    }
+}

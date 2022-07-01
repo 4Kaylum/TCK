@@ -1,0 +1,112 @@
+#content {
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.leaders {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+    background: url(../../static/images/sunrise_trans.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: contain;
+    padding-bottom: 50px;
+}
+
+.leader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leaders .first {
+    --background-color: 255, 148, 0;
+    order: 2;
+}
+
+.leaders .second {
+    --background-color: 49, 93, 254;
+    order: 1;
+    margin-top: 50px;
+}
+
+.leaders .third {
+    --background-color: 49, 93, 254;
+    order: 3;
+    margin-top: 80px;
+}
+
+.leader .leader-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /*! margin-top: 50px; */
+    z-index: 10;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.2);
+}
+
+.leader .leader-info {
+    border: 2px solid rgb(var(--background-color));
+    background: linear-gradient(
+        90deg,
+        rgba(var(--background-color), 0.3),
+        rgba(0, 0, 0, 0.3)
+    );
+    border-radius: 20px;
+    min-width: 300px;
+    margin-top: -50px;
+    text-align: center;
+    padding: 50px 0 20px 0
+}
+
+.ranks {
+    width: 100%;
+    margin: -30px 0 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.ranks p {
+    margin: 0;
+}
+
+.ranks .rank {
+    display: flex;
+    background: var(--secondary-blue);
+    margin: 10px 0;
+    padding: 15px 20px;
+    justify-content: space-between;
+    border-radius: 20px;
+}
+
+.ranks .rank .user-info {
+    display: flex;
+}
+
+.rank .name {
+    color: var(--primary-blue);
+    margin: 0 20px;
+}
+
+@media screen and (max-width: 1100px) {
+    .leaders {
+        background: none;
+    }
+    
+    .leaders .first {
+        margin-top: 0;
+        order: 1
+    }
+    
+    .leaders .second,
+    .leaders .third {
+        margin-top: 10px
+    }
+}
