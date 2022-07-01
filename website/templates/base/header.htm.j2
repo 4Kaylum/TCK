@@ -1,13 +1,13 @@
 {% set navbar_links = [
-    ("index", "Affiliates"),
-    ("videos", "Videos"),
-    ("giveaways", "Giveaways"),
-    ("leaderboard", "Leaderboards"),
-    ("contact", "Contact"),
+    ("/", "Affiliates"),
+    ("/videos", "Videos"),
+    ("/giveaways", "Giveaways"),
+    ("/leaderboard", "Leaderboards"),
+    ("/contact", "Contact"),
 ] %}
 
 
-{% macro add_header(current_page = "index") -%}
+{% macro add_header(current_page = "/") -%}
 <header>
     <div class="socials">
         <a href="#" class="social-logo">
