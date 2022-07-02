@@ -98,4 +98,7 @@
     .affiliate-block .tags {
         display: none;
     }
+    #filters {
+        display: none;
+    }
 }
