@@ -66,7 +66,7 @@ async def twitch_login_processor(request: Request):
 
         # Get the user's name and ID
         headers = {
-            "Authorization": f"Bearer OAuth {auth_data['access_token']}",
+            "Authorization": f"Bearer {auth_data['access_token']}",
             "User-Agent": request.app['config']['user_agent'],
         }
         url = "https://id.twitch.tv/oauth2/validate"
