@@ -116,7 +116,9 @@ async def twitch_login_processor(request: Request):
     # It succeeded - sick
     # Let's store that and direct them as necessary
     session = await aiohttp_session.get_session(request)
-    session['user'] = dict(db_data[0])
+    user_db_data = dict(db_data[0])
+    user_db_data['id'] = str(user_db_data['id'])
+    session['user'] = user_db_data
     return HTTPFound(location="/")
 
 
