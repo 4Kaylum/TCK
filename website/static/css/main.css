@@ -86,10 +86,6 @@ header .login span {
     flex-wrap: wrap;
 }
 
-.icon-vfl {
-    height: 1rem;
-}
-
 @media screen and (max-width: 1100px) {
     header {
         padding: 20px 10px;
