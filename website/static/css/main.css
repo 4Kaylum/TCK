@@ -68,12 +68,13 @@ header .login:visited{
     width: 100px;
     height: 20px;
     justify-content: center;
+    color: inherit;
+    text-decoration: none;
 }
 
 header .login * {
     color: inherit;
     text-decoration: none;
-    padding: 0 0px;
 }
 
 #content {
