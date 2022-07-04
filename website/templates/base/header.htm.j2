@@ -11,27 +11,29 @@
 <header>
     <div class="socials">
         <a href="#" class="social-logo">
-            <img class="social-logo-image" src="static/images/header/logos/twitch.svg" alt="The Twitch logo" />
+            <img class="social-logo-image" src="{{ static('/images/header/logos/twitch.svg') }}" alt="The Twitch logo" />
         </a>
         <a href="#" class="social-logo">
-            <img class="social-logo-image" src="static/images/header/logos/youtube.svg" alt="The YouTube logo" />
+            <img class="social-logo-image" src="{{ static('/images/header/logos/youtube.svg') }}" alt="The YouTube logo" />
         </a>
         <a href="#" class="social-logo">
-            <img class="social-logo-image" src="static/images/header/logos/twitter.svg" alt="The Twitter logo" />
+            <img class="social-logo-image" src="{{ static('/images/header/logos/twitter.svg') }}" alt="The Twitter logo" />
         </a>
         <a href="#" class="social-logo">
-            <img class="social-logo-image" src="static/images/header/logos/tiktok.svg" alt="The Tiktok logo" />
+            <img class="social-logo-image" src="{{ static('/images/header/logos/tiktok.svg') }}" alt="The Tiktok logo" />
         </a>
     </div>
     <div class="links">
-        <img class="logo" src="static/images/logo.png" />
+        <img class="logo" src="{{ static('/images/logo.png') }}" />
         {% for href, text in navbar_links %}
-            <a href="{{ href }}" {% if href == current_page %}class="active"{% endif %}>{{ text }}</a>
+            <a href="{{ href }}"{% if href == current_page %} class="active"{% endif %}>{{ text }}</a>
         {% endfor %}
     </div>
     <div class="login">
-        <span>Sign In</span>
-        <img src="static/images/header/logos/steam.svg" class="social-logo-image" />
+        <a href="/login">
+            <span>Sign In</span>
+            <img src="{{ static('/images/header/logos/steam.svg') }}" class="social-logo-image" />
+        </a>
     </div>
 </header>
 {%- endmacro %}
