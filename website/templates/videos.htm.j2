@@ -28,7 +28,7 @@
 <div id="twitch">
     <span class="twitch-cta">Watch on Twitch.tv</span>
     <iframe
-            src="https://player.twitch.tv/?channel=livetck&parent={{ request.app['config']['website_base_url'] }}/videos"
+            src="https://player.twitch.tv/?channel=livetck&parent={{ request.app['config']['website_base_url'].split('/')[-1] }}"
             frameborder="0"
             allowfullscreen="true"
             scrolling="no"
