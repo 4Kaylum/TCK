@@ -56,9 +56,10 @@ async def twitch_login_processor(request: Request):
         "grant_type": "authorization_code",
         "redirect_uri": request.app['config']['website_base_url'] + "/login_processor/twitch"
     }
+    token_params = "&".join([f"{i}={o}" for i, o in params.items()])
     async with aiohttp.ClientSession() as session:
         url = "https://id.twitch.tv/oauth2/token"
-        token_site = await session.post(url, headers=headers, data=params)
+        token_site = await session.post(url, headers=headers, data=token_params)
         if not token_site.ok:
             log.info("Failed to get token data: %s" % await token_site.text())
             return HTTPFound(location="/")
