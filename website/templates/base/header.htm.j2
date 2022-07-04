@@ -29,13 +29,16 @@
             <a href="{{ href }}"{% if href == current_page %} class="active"{% endif %}>{{ text }}</a>
         {% endfor %}
     </div>
-    <a href="/login" class="login">
-        {% if twitch_username %}
+    {% if twitch_username %}
+        <a href="/logout" class="login">
             <span>{{ twitch_username }}<br />Logout</span>
-        {% else %}
+            <img src="{{ static('/images/header/logos/twitch.svg') }}" class="social-logo-image" />
+        </a>
+    {% else %}
+        <a href="/login" class="login">
             <span>Sign In</span>
-        {% endif %}
-        <img src="{{ static('/images/header/logos/steam.svg') }}" class="social-logo-image" />
-    </a>
+            <img src="{{ static('/images/header/logos/twitch.svg') }}" class="social-logo-image" />
+        </a>
+    {% endif %}
 </header>
 {%- endmacro %}
