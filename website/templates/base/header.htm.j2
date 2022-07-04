@@ -7,7 +7,7 @@
 ] %}
 
 
-{% macro add_header(current_page = "/") -%}
+{% macro add_header(twitch_username = none, current_page = "/") -%}
 <header>
     <div class="socials">
         <a href="#" class="social-logo">
@@ -30,8 +30,8 @@
         {% endfor %}
     </div>
     <a href="/login" class="login">
-        {% if session.user_info %}
-            <span>{{ session.user_info.twitch_username }}<br />Logout</span>
+        {% if twitch_username %}
+            <span>{{ twitch_username }}<br />Logout</span>
         {% else %}
             <span>Sign In</span>
         {% endif %}

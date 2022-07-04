@@ -2,11 +2,17 @@
 {%- from "base/header.htm.j2" import add_header -%}
 {%- from "base/footer.htm.j2" import add_footer -%}
 
+{% if session and session.user_info and session.user_info.twitch_username %}
+    {% set twitch_username = session.user_info.twitch_username %}
+{% else %}
+    {% set twitch_username = None %}
+{% endif %}
+
 <!DOCTYPE html>
 <html>
 {{ add_head(page_title, css_files) }}
 <body>
-{{ add_header(current_page_url) }}
+{{ add_header(twitch_username, current_page_url) }}
 <div id="content">
 {%- block content -%}{%- endblock content -%}
 </div>
