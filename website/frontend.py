@@ -40,6 +40,13 @@ async def leaderboard(request: Request):
     return {}
 
 
+@routes.get("/raffles")
+@template("raffles.htm.j2")
+@add_standard_args()
+async def raffles(request: Request):
+    return {}
+
+
 @routes.get("/videos")
 @template("videos.htm.j2")
 @add_standard_args()
