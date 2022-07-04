@@ -6,14 +6,14 @@
 {% set current_page_url = "/videos" %}
 
 
-{% macro create_video() %}
+{% macro create_video(title, thumbnail_url, upload_timestamp, views) %}
 <div class="video">
-    <img src="https://picsum.photos/320/180" />
+    <img src="{{ thumbnail_url }}" />
     <div class="overlay">
-        <p class="title">Title</p>
+        <p class="title">{{ title }}</p>
         <div class="metadata">
-            <p>2 days ago</p>
-            <p>69,420 Views</p>
+            <p data-timestamp="{{ upload_timestamp }}">{{ upload_timestamp }}</p>  <!-- dayjs(1536484369695).fromNow(); -->
+            <p>{{ views }} Views</p>
         </div>
     </div>
 </div>
@@ -38,11 +38,53 @@
     </iframe>
 </div>
 <div id="videos">
-    {{ create_video() }}
-    {{ create_video() }}
-    {{ create_video() }}
-    {{ create_video() }}
-    {{ create_video() }}
-    {{ create_video() }}
+    {{ 
+        create_video(
+            "Title",
+            "https://picsum.photos/320/180",
+            69,
+            69_000,
+        ) 
+    }}
+    {{ 
+        create_video(
+            "Title",
+            "https://picsum.photos/320/180",
+            69,
+            69_000,
+        ) 
+    }}
+    {{ 
+        create_video(
+            "Title",
+            "https://picsum.photos/320/180",
+            69,
+            69_000,
+        ) 
+    }}
+    {{ 
+        create_video(
+            "Title",
+            "https://picsum.photos/320/180",
+            69,
+            69_000,
+        ) 
+    }}
+    {{ 
+        create_video(
+            "Title",
+            "https://picsum.photos/320/180",
+            69,
+            69_000,
+        ) 
+    }}
+    {{ 
+        create_video(
+            "Title",
+            "https://picsum.photos/320/180",
+            69,
+            69_000,
+        ) 
+    }}
 </div>
 {%- endblock content -%}
