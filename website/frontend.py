@@ -19,3 +19,9 @@ async def index(request: Request):
 @template("leaderboard.htm.j2")
 async def leaderboard(request: Request):
     return {}
+
+
+@routes.get("/videos")
+@template("videos.htm.j2")
+async def videos(request: Request):
+    return {}

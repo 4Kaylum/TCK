@@ -1,0 +1,48 @@
+{% extends "base/body.htm.j2" %}
+
+
+{% set page_title = "TCK - Videos" %}
+{% set css_files = ["/css/videos.css"] %}
+{% set current_page_url = "/videos" %}
+
+
+{% macro create_video() %}
+<div class="video">
+    <img src="https://picsum.photos/320/180" />
+    <div class="overlay">
+        <p class="title">Title</p>
+        <div class="metadata">
+            <p>2 days ago</p>
+            <p>69,420 Views</p>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro create_channel() %}
+{% endmacro %}
+
+
+{%- block content -%}
+<div id="twitch">
+    <span class="twitch-cta">Watch on Twitch.tv</span>
+    <iframe
+            src="https://player.twitch.tv/?channel=livetck&parent=localhost:8081/videos"
+            frameborder="0"
+            allowfullscreen="true"
+            scrolling="no"
+            height="378"
+            width="620"
+        >
+    </iframe>
+</div>
+<div id="videos">
+    {{ create_video() }}
+    {{ create_video() }}
+    {{ create_video() }}
+    {{ create_video() }}
+    {{ create_video() }}
+    {{ create_video() }}
+</div>
+{%- endblock content -%}
