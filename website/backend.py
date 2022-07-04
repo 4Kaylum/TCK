@@ -118,7 +118,7 @@ async def twitch_login_processor(request: Request):
     session = await aiohttp_session.get_session(request)
     user_db_data = dict(db_data[0])
     user_db_data['id'] = str(user_db_data['id'])
-    session['user'] = user_db_data
+    session['user_info'] = user_db_data
     return HTTPFound(location="/")
 
 

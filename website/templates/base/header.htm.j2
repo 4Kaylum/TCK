@@ -30,7 +30,11 @@
         {% endfor %}
     </div>
     <a href="/login" class="login">
-        <span>Sign In</span>
+        {% if session.user_info %}
+            <span>{{ session.user_info.twitch_username }}<br />Logout</span>
+        {% else %}
+            <span>Sign In</span>
+        {% endif %}
         <img src="{{ static('/images/header/logos/steam.svg') }}" class="social-logo-image" />
     </a>
 </header>
