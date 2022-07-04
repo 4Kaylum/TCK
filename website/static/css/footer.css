@@ -28,7 +28,7 @@ footer .copyright {
 }
 
 footer a:visited {
-    color: initial;
+    color: inherit;
 }
 
 @media screen and (max-width: 1100px) {
