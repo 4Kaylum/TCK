@@ -1,3 +1,6 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
 CREATE TABLE IF NOT EXISTS guild_settings(
     guild_id BIGINT PRIMARY KEY,
     prefix TEXT
@@ -19,23 +22,11 @@ CREATE TABLE IF NOT EXISTS user_settings(
 -- guild ID specified.
 
 
--- CREATE TABLE IF NOT EXISTS role_list(
---     guild_id BIGINT,
---     role_id BIGINT,
---     key TEXT,
---     value TEXT,
---     PRIMARY KEY (guild_id, role_id, key)
--- );
--- A list of role: value mappings should you need one.
--- This is not required for VBU, so is commented out by default.
-
-
--- CREATE TABLE IF NOT EXISTS channel_list(
---     guild_id BIGINT,
---     channel_id BIGINT,
---     key TEXT,
---     value TEXT,
---     PRIMARY KEY (guild_id, channel_id, key)
--- );
--- A list of channel: value mappings should you need one.
--- This is not required for VBU, so is commented out by default.
+CREATE TABLE IF NOT EXISTS users(
+    id UUID PRIMARY KEY,
+    permissions BIGINT NOT NULL DEFAULT 0,
+    twitch_id TEXT NOT NULL UNIQUE,
+    twitch_username TEXT NOT NULL,
+    discord_id TEXT UNIQUE,
+    discord_username TEXT
+);
