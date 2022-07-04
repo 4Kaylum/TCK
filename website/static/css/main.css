@@ -66,13 +66,14 @@ header .login:visited{
     align-items: center;
     border-radius: 10px;
     width: 100px;
-    color: inherit;
-    text-decoration: none;
+    height: 20px;
     justify-content: center;
 }
 
 header .login * {
-    padding: 0 5px;
+    color: inherit;
+    text-decoration: none;
+    padding: 0 0px;
 }
 
 #content {
