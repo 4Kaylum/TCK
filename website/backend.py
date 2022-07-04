@@ -42,6 +42,7 @@ async def twitch_login_processor(request: Request):
     # See if they pressed cancel
     if request.query.get("error"):
         return HTTPFound(location="/")
+    log = request.app['logger']
 
     # Check their code is valid and for us
     headers = {
@@ -57,10 +58,12 @@ async def twitch_login_processor(request: Request):
     }
     async with aiohttp.ClientSession() as session:
         url = "https://id.twitch.tv/oauth2/token"
-        site = await session.post(url, headers=headers, data=params)
-        if not site.ok:
+        token_site = await session.post(url, headers=headers, data=params)
+        if not token_site.ok:
+            log.info("Failed to get token data: %s" % await token_site.text())
             return HTTPFound(location="/")
-        auth_data = await site.json()
+        auth_data = await token_site.json()
+        log.info("Auth token data: %s" % auth_data)
 
         # Get the user's name and ID
         headers = {
@@ -68,10 +71,12 @@ async def twitch_login_processor(request: Request):
             "User-Agent": request.app['config']['user_agent'],
         }
         url = "https://id.twitch.tv/oauth2/validate"
-        site = await session.post(url, headers=headers)
-        if not site.ok:
+        validate_site = await session.post(url, headers=headers)
+        if not validate_site.ok:
+            log.info("Failed to validate token data: %s" % await validate_site.text())
             return HTTPFound(location="/")
-        user_data = await site.json()
+        user_data = await validate_site.json()
+        log.info("Validate token data: %s" % user_data)
 
     # Store their data in the database if necessary
     async with vbu.Database() as db:
