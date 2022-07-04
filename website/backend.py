@@ -61,7 +61,7 @@ async def twitch_login_processor(request: Request):
         url = "https://id.twitch.tv/oauth2/token"
         token_site = await session.post(url, headers=headers, data=token_params)
         if not token_site.ok:
-            log.info("Failed to get token data: %s" % await token_site.text())
+            log.info("Failed to get token data: %s %s %s" % (await token_site.text(), url, token_params))
             return HTTPFound(location="/")
         auth_data = await token_site.json()
         log.info("Auth token data: %s" % auth_data)
