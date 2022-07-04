@@ -46,7 +46,6 @@ async def twitch_login_processor(request: Request):
 
     # Check their code is valid and for us
     headers = {
-        "Content-Type": "application/xxx-www-form-encoded",
         "User-Agent": request.app['config']['user_agent'],
     }
     params = {
@@ -56,12 +55,11 @@ async def twitch_login_processor(request: Request):
         "grant_type": "authorization_code",
         "redirect_uri": request.app['config']['website_base_url'] + "/login_processor/twitch"
     }
-    token_params = "&".join([f"{i}={o}" for i, o in params.items()])
     async with aiohttp.ClientSession() as session:
         url = "https://id.twitch.tv/oauth2/token"
-        token_site = await session.post(url, headers=headers, data=token_params)
+        token_site = await session.post(url, headers=headers, data=params)
         if not token_site.ok:
-            log.info("Failed to get token data: %s %s %s" % (await token_site.text(), url, token_params))
+            log.info("Failed to get token data: %s %s %s" % await token_site.text())
             return HTTPFound(location="/")
         auth_data = await token_site.json()
         log.info("Auth token data: %s" % auth_data)
@@ -72,7 +70,7 @@ async def twitch_login_processor(request: Request):
             "User-Agent": request.app['config']['user_agent'],
         }
         url = "https://id.twitch.tv/oauth2/validate"
-        validate_site = await session.post(url, headers=headers)
+        validate_site = await session.get(url, headers=headers)
         if not validate_site.ok:
             log.info("Failed to validate token data: %s" % await validate_site.text())
             return HTTPFound(location="/")
