@@ -46,7 +46,7 @@ async def twitch_login_processor(request: Request):
 
     # Check their code is valid and for us
     headers = {
-        "Content-Type": "xxx-www-form-encoded",
+        "Content-Type": "application/xxx-www-form-encoded",
         "User-Agent": request.app['config']['user_agent'],
     }
     params = {
