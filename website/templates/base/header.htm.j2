@@ -29,11 +29,9 @@
             <a href="{{ href }}"{% if href == current_page %} class="active"{% endif %}>{{ text }}</a>
         {% endfor %}
     </div>
-    <div class="login">
-        <a href="/login">
-            <span>Sign In</span>
-            <img src="{{ static('/images/header/logos/steam.svg') }}" class="social-logo-image" />
-        </a>
-    </div>
+    <a href="/login" class="login">
+        <span>Sign In</span>
+        <img src="{{ static('/images/header/logos/steam.svg') }}" class="social-logo-image" />
+    </a>
 </header>
 {%- endmacro %}
