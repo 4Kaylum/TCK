@@ -1,16 +1,37 @@
 #content {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: auto;
 }
 
 .giveaway-block {
     width: 100%;
-    border-left: 5px solid var(--primary-blue);
     margin-bottom: 10px;
+}
+
+.giveaway-block .title {
+    border-left: 5px solid var(--primary-blue);
     padding-left: 10px;
 }
 
 .giveaway-block p,
 .giveaway-block h1 {
     margin: 0;
+}
+
+.giveaway {
+    max-width: 300px;
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    background: linear-gradient(180deg, rgba(0, 55, 255, 0) 0%, rgba(34, 81, 255, 0.54) 100%), linear-gradient(180deg, rgba(49, 93, 254, 0) 0%, #315DFE 100%);
+    border: 2px solid var(--primary-blue);
+    border-radius: 14px;
+}
+
+.giveaway:first-of-type {
+    margin-left: 0;
+}
+
+.giveaway .dark-filter {
+    background: linear-gradient(178.57deg, rgba(0, 0, 0, 0.238) 61.41%, rgba(0, 0, 0, 0.68) 93.67%);
 }
