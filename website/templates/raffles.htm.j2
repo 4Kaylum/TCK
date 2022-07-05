@@ -8,11 +8,14 @@
 
 {% macro create_giveaway(giveaway) %}
 <div class="giveaway">
-    <div class="metadata">
-        <p class="name">{{ giveaway.name }}</p>
-        <p class="description">{{ giveaway.description }}</p>
-    </div>
     <img src="{{ giveaway.image }}" />
+    <div class="text">
+        <div class="metadata">
+            <p class="name">{{ giveaway.name }}</p>
+            <p class="description">{{ giveaway.description }}</p>
+        </div>
+        <button>Join</button>
+    </div>
 </div>
 {% endmacro %}
 
@@ -26,6 +29,14 @@
     <div class="giveaway-holder">
         {% for g in giveaways %}
             {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
         {% endfor %}
     </div>
 </div>
@@ -37,6 +48,14 @@
     </div>
     <div class="giveaway-holder">
         {% for g in raffles %}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
+            {{ create_giveaway(g) }}
             {{ create_giveaway(g) }}
         {% endfor %}
     </div>
