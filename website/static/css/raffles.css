@@ -18,20 +18,47 @@
     margin: 0;
 }
 
+.giveaway-holder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
 .giveaway {
     max-width: 300px;
     width: 100%;
-    margin: 10px;
-    padding: 10px;
-    background: linear-gradient(180deg, rgba(0, 55, 255, 0) 0%, rgba(34, 81, 255, 0.54) 100%), linear-gradient(180deg, rgba(49, 93, 254, 0) 0%, #315DFE 100%);
+    margin: 10px 10px 10px 0;
+    padding: 10px 20px;
+    background: linear-gradient(180deg, #0d121e 0%, #0e1d4d 100%), linear-gradient(180deg, #08112e 0%, #315DFE 100%);
     border: 2px solid var(--primary-blue);
     border-radius: 14px;
 }
 
-.giveaway:first-of-type {
-    margin-left: 0;
+.giveaway .text {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: -50px;
 }
 
-.giveaway .dark-filter {
-    background: linear-gradient(178.57deg, rgba(0, 0, 0, 0.238) 61.41%, rgba(0, 0, 0, 0.68) 93.67%);
+.giveaway .name {
+    font-size: 1.2rem;
+}
+
+.giveaway .description {
+    color: var(--primary-blue);
+}
+
+.giveaway button {
+    align-self: flex-end;
+    padding: 5px 20px;
+    background: var(--primary-blue);
+    border: 0;
+    font-family: inherit;
+    border-radius: 10px;
+}
+
+.giveaway button:hover {
+    background: lightgreen;
 }

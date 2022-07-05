@@ -8,7 +8,9 @@
 
 {% macro create_giveaway(giveaway) %}
 <div class="giveaway">
-    <img src="{{ giveaway.image }}" />
+    <img src="{{ static('/images/raffle_item_background.png') }}" class="background decoration" />
+    <img src="{{ static('/images/raffle_item_border.png') }}" class="border decoration" />
+    <img src="{{ giveaway.image }}" class="image" />
     <div class="text">
         <div class="metadata">
             <p class="name">{{ giveaway.name }}</p>
