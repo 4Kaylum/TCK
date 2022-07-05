@@ -58,6 +58,7 @@
 .giveaway .image {
     z-index: 30;
     position: relative;
+    width: 100%;
 }
 
 .giveaway .text {
@@ -88,4 +89,11 @@
 
 .giveaway button:hover {
     background: lightgreen;
+}
+
+@media screen and (max-width: 770px) {
+    .giveaway {
+        width: 100%;
+        max-width: none;
+    }
 }
