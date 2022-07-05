@@ -33,6 +33,31 @@
     background: linear-gradient(180deg, #0d121e 0%, #0e1d4d 100%), linear-gradient(180deg, #08112e 0%, #315DFE 100%);
     border: 2px solid var(--primary-blue);
     border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+}
+
+.giveaway .decoration {
+    float: left;
+    display: inline;
+    width: calc(100% - 40px);
+    top: 10px;
+    position: absolute;
+}
+
+.giveaway .background {
+    width: calc(100% - 60px);
+    margin: 15px 0 0 10px;
+    z-index: 10;
+}
+
+.giveaway .border {
+    z-index: 20;
+}
+
+.giveaway .image {
+    z-index: 30;
+    position: relative;
 }
 
 .giveaway .text {
@@ -40,6 +65,8 @@
     width: 100%;
     justify-content: space-between;
     margin-top: -50px;
+    position: relative;
+    z-index: 30;
 }
 
 .giveaway .name {
