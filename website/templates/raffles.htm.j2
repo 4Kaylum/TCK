@@ -6,18 +6,39 @@
 {% set current_page_url = "/raffles" %}
 
 
+{% macro create_giveaway(giveaway) %}
+<div class="giveaway">
+    <div class="metadata">
+        <p class="name">{{ giveaway.name }}</p>
+        <p class="description">{{ giveaway.description }}</p>
+    </div>
+    <img src="{{ giveaway.image }}" />
+</div>
+{% endmacro %}
+
+
 {%- block content -%}
-<div id="giveaways">
+<div id="giveaways" class="giveaway-block">
     <div class="title">
         <h1>Giveaways</h1>
         <p>Join giveaways and win amazing prizes!</p>
     </div>
+    <div class="giveaway-holder">
+        {% for g in giveaways %}
+            {{ create_giveaway(g) }}
+        {% endfor %}
+    </div>
 </div>
 
-<div id="raffles">
+<div id="raffles" class="giveaway-block">
     <div class="title">
         <h1>Raffles</h1>
         <p>Join giveaways and win amazing prizes!</p>
+    </div>
+    <div class="giveaway-holder">
+        {% for g in raffles %}
+            {{ create_giveaway(g) }}
+        {% endfor %}
     </div>
 </div>
 {%- endblock content -%}
