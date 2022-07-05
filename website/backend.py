@@ -181,7 +181,7 @@ async def get_videos(request: Request):
                 videos.extend(data['items'])
 
     # Format those into a more helpful object
-    videos = [utils.Video(d).to_json() for d in videos]
+    videos = [utils.Video(data=d).to_json() for d in videos]
 
     # And done
     return json_response(videos)

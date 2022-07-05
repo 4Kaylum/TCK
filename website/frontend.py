@@ -1,10 +1,11 @@
 from typing import Union
 
-from aiohttp.web import HTTPFound, Request, Response, RouteTableDef
+from aiohttp.web import Request, Response, RouteTableDef
 import aiohttp_session
 from aiohttp_jinja2 import template
-import discord
 from discord.ext import vbu
+
+from cogs import utils
 
 
 routes = RouteTableDef()
@@ -44,7 +45,25 @@ async def leaderboard(request: Request):
 @template("raffles.htm.j2")
 @add_standard_args()
 async def raffles(request: Request):
-    return {}
+    async with vbu.Database() as db:
+        rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                raffles
+            WHERE
+                end_time > TIMEZONE('UTC', NOW())
+            """,
+        )
+    raffles = [
+        utils.Raffle(data=i)
+        for i in rows
+    ]
+    return {
+        "raffles": [i for i in raffles if not i.is_giveaway],
+        "giveaways": [i for i in raffles if i.is_giveaway],
+    }
 
 
 @routes.get("/videos")

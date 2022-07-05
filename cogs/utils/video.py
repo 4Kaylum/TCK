@@ -13,7 +13,18 @@ class Video:
     pretends they're whole videos.
     """
 
-    def __init__(self, data: dict):
+    __slots__ = (
+        'playlist_video_id',
+        '_published_at',
+        'title',
+        'description',
+        'channel_id',
+        'channel',
+        'id',
+        'thumbnail',
+    )
+
+    def __init__(self, *, data: dict):
         self.playlist_video_id = data['id']
         self._published_at = data['snippet']['contentDetails']['videoId']
         self.title = data['snippet']['title']
@@ -27,11 +38,11 @@ class Video:
             self.thumbnail = ""
     
     @property
-    def published_at(self) -> int:
+    def published_at(self) -> float:
         v = dt.strptime(self._published_at, "%Y-%m-%dT%H:%M:%SZ")  # 2011-11-22T15:29:40Z
         return v.timestamp()
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
             "playlist_video_id": self.playlist_video_id,
             "published_at": self.published_at,
