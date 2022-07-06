@@ -30,21 +30,21 @@ def add_standard_args():
 @routes.get("/index")
 @template("index.htm.j2")
 @add_standard_args()
-async def index(request: Request):
+async def index(_: Request):
     return {}
 
 
 @routes.get("/leaderboard")
 @template("leaderboard.htm.j2")
 @add_standard_args()
-async def leaderboard(request: Request):
+async def leaderboard(_: Request):
     return {}
 
 
 @routes.get("/raffles")
 @template("raffles.htm.j2")
 @add_standard_args()
-async def raffles(request: Request):
+async def raffles(_: Request):
     async with vbu.Database() as db:
         rows = await db.call(
             """
@@ -69,5 +69,12 @@ async def raffles(request: Request):
 @routes.get("/videos")
 @template("videos.htm.j2")
 @add_standard_args()
-async def videos(request: Request):
+async def videos(_: Request):
+    return {}
+
+
+@routes.get("/contact")
+@template("contact.htm.j2")
+@add_standard_args()
+async def contact(_: Request):
     return {}
