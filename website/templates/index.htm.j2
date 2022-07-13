@@ -31,11 +31,14 @@
 
 {%- block content -%}
 <div id="prelude">
-    <div class="text">
-        <h1>Choose a <span style="color: #315DFE">code</span>,<br />get a free bonus!</h1>
-        <p>Get rewarded just by simply using our promotional codes.</p>
+    <img src="{{ static('/images/squares.png') }}" class="background" />
+    <div class="inner">
+        <div class="text">
+            <h1>Choose a <span style="color: #315DFE">code</span>,<br />get a free bonus!</h1>
+            <p>Get rewarded just by simply using our promotional codes.</p>
+        </div>
+        <img src="{{ static('/images/click_claim.png') }}" />
     </div>
-    <img src="{{ static('/images/click_claim.png') }}" />
 </div>
 <div id="filters">
     <input type="checkbox" data-filter="Crypto" onchange="updateVisibleAffiliates()" checked /><p>Crypto</p>
