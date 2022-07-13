@@ -12,12 +12,12 @@
     <div class="affiliate-block">
         <p class="perks">{{ perks }}</p>
         <p class="subtext">{{ subtext }}</p>
-        <div class="claim-button">
-            <p class="code">{{ code }}</p>
-            <p class="button">
-                <a href="{{ url }}">Claim</a>
-            </p>
-        </div>
+        <a href="{{ url }}">
+            <div class="claim-button">
+                <p class="code">{{ code }}</p>
+                <p class="button">Claim</p>
+            </div>
+        </a>
         <p class="link">{{ link }}</p>
         <ul class="tags">
             {% for t in tags %}
