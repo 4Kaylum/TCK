@@ -6,7 +6,18 @@
 {% set current_page_url = "/contact" %}
 
 
-{% macro create_main_contact() %}
+{% macro create_main_contact(name, social_logo, image, url, colour) %}
+<div class="contact">
+    <img class="underlay" src="{{ static('/images/social_background.png') }}" />
+    <div class="overlay" style="--overlay: {{ colour }}"></div>
+    <div class="information">
+        <img class="profile-picture" src="{{ image }}" />
+        <a href="{{ url }}">
+            <h1 class="name">{{ name }}</h1>
+        </a>
+        <img class="logo" src="{{ social_logo }}" />
+    </div>
+</div>
 {% endmacro %}
 
 
@@ -16,8 +27,54 @@
 
 {%- block content -%}
 <div id="main-contact">
+    <div class="title">
+        <h1>Contact</h1>
+        <p>Get in touch with TCK</p>
+    </div>
+    <div class="contact-block">
+        {{
+            create_main_contact(
+                "@TCKTwitch",
+                static("/images/contact/twitter.png"),
+                "https://picsum.photos/100/100",
+                "#",
+                "#379FFF",
+            )
+        }}
+        {{
+            create_main_contact(
+                "@TCKTwitch",
+                static("/images/contact/twitter.png"),
+                "https://picsum.photos/100/100",
+                "#",
+                "#379FFF",
+            )
+        }}
+        {{
+            create_main_contact(
+                "@TCKTwitch",
+                static("/images/contact/twitter.png"),
+                "https://picsum.photos/100/100",
+                "#",
+                "#379FFF",
+            )
+        }}
+        {{
+            create_main_contact(
+                "@TCKTwitch",
+                static("/images/contact/twitter.png"),
+                "https://picsum.photos/100/100",
+                "#",
+                "#379FFF",
+            )
+        }}
+    </div>
 </div>
 
-<div id="secondary-contact">
+<div class="secondary-contact">
+    <div class="title">
+        <h1>Stream Team</h1>
+        <p>The people behind the streams</p>
+    </div>
 </div>
 {%- endblock content -%}

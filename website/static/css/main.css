@@ -86,6 +86,16 @@ header .login span {
     flex-wrap: wrap;
 }
 
+.title {
+    border-left: 5px solid var(--primary-blue);
+    padding-left: 10px;
+}
+
+.title p,
+.title h1 {
+    margin: 0;
+}
+
 @media screen and (max-width: 1100px) {
     header {
         padding: 20px 10px;

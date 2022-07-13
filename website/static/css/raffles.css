@@ -8,11 +8,6 @@
     margin-bottom: 10px;
 }
 
-.giveaway-block .title {
-    border-left: 5px solid var(--primary-blue);
-    padding-left: 10px;
-}
-
 .giveaway-block p,
 .giveaway-block h1 {
     margin: 0;
