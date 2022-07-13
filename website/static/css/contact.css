@@ -49,14 +49,16 @@
     align-items: center;
 }
 
-.contact .information .logo {
-    width: 40px;
+.contact .information .profile-picture {
+    border-radius: 50%;
 }
 
 .contact .information .name {
     margin: 0;
+    margin-top: 42px;
 }
 
-.contact .information .profile-picture {
-    border-radius: 50%;
+.contact .information .logo {
+    margin-top: 52px;
+    width: 40px;
 }
