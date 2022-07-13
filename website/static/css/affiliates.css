@@ -1,3 +1,36 @@
+#prelude {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin: -20px -20px 60px -20px;
+}
+
+#prelude .background {
+    position: absolute;
+    width: calc(100vw - 20px);
+    height: 230px;
+    overflow: hidden;
+    mix-blend-mode: overlay;
+    margin: 0 -20px 0 -20px;
+}
+
+#prelude .inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+}
+
+#prelude .text h1 {
+    margin: 0;
+}
+
+#prelude .text p {
+    margin: 0;
+    color: gray;
+}
+
 #filters {
     width: 100%;
     display: flex;
@@ -94,17 +127,24 @@
 }
 
 @media screen and (max-width: 1100px) {
+    #prelude {
+        display: none;
+    }
+
+    #filters {
+        display: none;
+    }
+
     .affiliate {
         width: 100%;
     }
+
     .affiliate-block {
         width: 100%;
         padding-bottom:10px;
     }
+
     .affiliate-block .tags {
-        display: none;
-    }
-    #filters {
         display: none;
     }
 }
