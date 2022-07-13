@@ -6,7 +6,7 @@
 {% set current_page_url = "/" %}
 
 
-{%- macro create_affiliate(image_url, perks, subtext, code, link, tags) -%}
+{%- macro create_affiliate(image_url, perks, subtext, code, link, url, tags) -%}
 <div class="affiliate" data-tags="{{ ','.join(tags) }}">
     <img class="logo" src="{{ static(image_url) }}" />
     <div class="affiliate-block">
@@ -14,7 +14,9 @@
         <p class="subtext">{{ subtext }}</p>
         <div class="claim-button">
             <p class="code">{{ code }}</p>
-            <p class="button">Claim</p>
+            <p class="button">
+                <a href="{{ url }}">Claim</a>
+            </p>
         </div>
         <p class="link">{{ link }}</p>
         <ul class="tags">
@@ -41,6 +43,7 @@
         "No requirements",
         "TCK",
         "stake.com/r/tck",
+        "https://stake.com/?c=TCK",
         [
             "Slots",
             "Live Games",
@@ -54,7 +57,8 @@
         "10% rakeback and VIP rewards",
         "No requirements",
         "TCK",
-        "stake.com/r/tck",
+        "csgoroll.com/r/tck",
+        "https://csgoroll.com/r/TCK",
         [
             "Roulette",
             "Case Opening",
@@ -63,28 +67,29 @@
         ],
     )
 }}
-{{
-    create_affiliate(
-        "/images/affiliates/csgo_empire.png",
-        "10% rakeback and VIP rewards",
-        "No requirements",
-        "TCK",
-        "stake.com/r/tck",
-        [
-            "Roulette",
-            "Coinflip",
-            "Crypto",
-            "Sports Betting",
-        ],
-    )
-}}
+## {{
+##     create_affiliate(
+##         "/images/affiliates/csgo_empire.png",
+##         "10% rakeback and VIP rewards",
+##         "No requirements",
+##         "TCK",
+##         "stake.com/r/tck",
+##         [
+##             "Roulette",
+##             "Coinflip",
+##             "Crypto",
+##             "Sports Betting",
+##         ],
+##     )
+## }}
 {{
     create_affiliate(
         "/images/affiliates/rollbit.png",
         "10% rakeback and VIP rewards",
         "No requirements",
         "TCK",
-        "stake.com/r/tck",
+        "rollbit.com/referral/tck",
+        "https://rollbit.com/referral/TCK",
         [
             "Slots",
             "Trading",
@@ -99,7 +104,8 @@
         "10% rakeback and VIP rewards",
         "No requirements",
         "TCK",
-        "stake.com/r/tck",
+        "gamdom.com",
+        "https://gamdom.com/landing?tag1=TCK",
         [
             "Roulette",
             "Blackjack",
@@ -114,7 +120,8 @@
         "10% rakeback and VIP rewards",
         "No requirements",
         "TCK",
-        "stake.com/r/tck",
+        "csgo500.com/r/tck",
+        "https://csgo500.com/r/TCK",
         [
             "Crash",
             "CS:GO",
@@ -129,22 +136,10 @@
         "10% rakeback and VIP rewards",
         "No requirements",
         "TCK",
-        "stake.com/r/tck",
+        "datdrop.com/",
+        "https://datdrop.com/",
         [
             "Trade Ups",
-            "Case Opening",
-            "Crypto",
-        ],
-    )
-}}
-{{
-    create_affiliate(
-        "/images/affiliates/farmskins.png",
-        "10% rakeback and VIP rewards",
-        "No requirements",
-        "TCK",
-        "stake.com/r/tck",
-        [
             "Case Opening",
             "Crypto",
         ],
@@ -156,7 +151,8 @@
         "10% rakeback and VIP rewards",
         "No requirements",
         "TCK",
-        "stake.com/r/tck",
+        "hypedrop.com/",
+        "https://hypedrop.com/",
         [
             "Case Opening",
             "Crypto",
