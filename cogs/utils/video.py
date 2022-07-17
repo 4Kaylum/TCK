@@ -31,7 +31,7 @@ class Video:
         self.description = data['snippet']['description']
         self.channel_id = data['snippet']['channelId']
         self.channel = data['snippet']['channelTitle']
-        self.id = data['snippet']['contentDetails']['videoId']
+        self.id = data['contentDetails']['videoId']
         try:
             self.thumbnail = data['snippet']['thumbnails'][-1]['url']
         except IndexError:
