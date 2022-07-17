@@ -12,7 +12,7 @@
     <div class="overlay">
         <p class="title">{{ title }}</p>
         <div class="metadata">
-            <p data-timestamp="{{ upload_timestamp }}">{{ upload_timestamp }}</p>  <!-- dayjs(1536484369695).fromNow(); -->
+            <p data-timestamp="{{ upload_timestamp }}"></p>  <!-- dayjs(1536484369695).fromNow(); -->
             <!-- <p>{{ views }} Views</p> -->
             <p></p>
         </div>
@@ -50,4 +50,11 @@
         }}
     {% endfor %}
 </div>
+
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.3/dayjs.min.js"></script>
+<script type="text/javascript">
+for(i of document.querySelectorAll("p['data-timestamp']")) {
+    i.innerHTML = dayjs(parseFloat(i.dataset.timestamp)).fromNow();
+}
+</script>
 {%- endblock content -%}
