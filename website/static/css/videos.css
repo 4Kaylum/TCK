@@ -36,15 +36,20 @@
 }
 
 .video img {
-    width: 400px;
+    width: 480px;
+    height: 270px;
 }
 
 .video .overlay {
     margin: -1.9em 0 0 0;
+    max-width: 480px;
 }
 
 .video .title {
     padding: 2px 12px;
+    overflow: hidden;
+    max-width: 480px;
+    white-space: nowrap;
 }
 
 .video p {
