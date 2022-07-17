@@ -98,7 +98,7 @@ async def get_videos(request: Request):
         "part": "snippet,contentDetails",
         "maxResults": 6,
         "playlistId": None,
-        "apiKey": api_key,
+        "key": api_key,
     }
     if playlist_ids:
         async with aiohttp.ClientSession(headers=headers) as session:
