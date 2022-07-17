@@ -26,7 +26,7 @@ class Video:
 
     def __init__(self, *, data: dict):
         self.playlist_video_id = data['id']
-        self._published_at = data['contentDetails']['viodePublishedAt']
+        self._published_at = data['contentDetails']['videoPublishedAt']
         self.title = data['snippet']['title']
         self.description = data['snippet']['description']
         self.channel_id = data['snippet']['channelId']
