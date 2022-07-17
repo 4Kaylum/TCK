@@ -41,7 +41,7 @@ class Video:
             # elif "high" in thumbnails:
             #     self.thumbnail = thumbnails['high']['url']
             elif "medium" in thumbnails:
-                self.thumbnail = thumbnails['hmediumigh']['url']
+                self.thumbnail = thumbnails['medium']['url']
             else:
                 self.thumbnail = thumbnails['default']['url']
         except IndexError:
