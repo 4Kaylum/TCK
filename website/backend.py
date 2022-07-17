@@ -148,40 +148,41 @@ async def login(request: Request):
     return HTTPFound(location=f"https://id.twitch.tv/oauth2/authorize?{params}")
 
 
-@routes.get("/api/get_videos")
-async def get_videos(request: Request):
-    """
-    Get the last N videos of a given playlist ID
-    (specified in config, as well as a Google Cloud
-    API key). 
-    """
+# @routes.get("/api/get_videos")
+# async def get_videos(request: Request):
+#     """
+#     Get the last N videos of a given playlist ID
+#     (specified in config, as well as a Google Cloud
+#     API key).
+#     """
 
-    # Get the playlist IDs
-    api_key = request.app['config']['google']['api_key']
-    playlist_ids = request.app['config']['google']['valid_playists']
+#     # Get the playlist IDs
+#     api_key = request.app['config']['google']['api_key']
+#     playlist_ids = request.app['config']['google']['valid_playists']
 
-    # Get the videos from the channel
-    videos = []
-    url = "https://www.googleapis.com/youtube/v3/playlistItems"  # https://developers.google.com/youtube/v3/docs/playlistItems/list
-    headers = {
-        "User-Agent": request.app['config']['user_agent'],
-    }
-    params = {
-        "part": "snippet,contentDetails",
-        "maxResults": 6,
-        "playlistId": None,
-    }
-    if playlist_ids:
-        async with aiohttp.ClientSession(headers=headers) as session:
-            for pid in playlist_ids:
-                params["playlistId"] = pid
-                site = await session.get(url, params=params)
-                site.raise_for_status()
-                data = await site.json()
-                videos.extend(data['items'])
+#     # Get the videos from the channel
+#     videos = []
+#     url = "https://www.googleapis.com/youtube/v3/playlistItems"  # https://developers.google.com/youtube/v3/docs/playlistItems/list
+#     headers = {
+#         "User-Agent": request.app['config']['user_agent'],
+#     }
+#     params = {
+#         "part": "snippet,contentDetails",
+#         "maxResults": 6,
+#         "playlistId": None,
+#         "apiKey": api_key,
+#     }
+#     if playlist_ids:
+#         async with aiohttp.ClientSession(headers=headers) as session:
+#             for pid in playlist_ids:
+#                 params["playlistId"] = pid
+#                 site = await session.get(url, params=params)
+#                 site.raise_for_status()
+#                 data = await site.json()
+#                 videos.extend(data['items'])
 
-    # Format those into a more helpful object
-    videos = [utils.Video(data=d).to_json() for d in videos]
+#     # Format those into a more helpful object
+#     videos = [utils.Video(data=d).to_json() for d in videos]
 
-    # And done
-    return json_response(videos)
+#     # And done
+#     return json_response(videos)

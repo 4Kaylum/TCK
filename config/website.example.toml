@@ -13,7 +13,7 @@ user_agent = ""  # A user agent to use for the application
 [google]
     api_key = ""
     valid_playlists = [
-        "PLBCF2DAC6FFB574DE",
+        "UUJZcsYCqoQ13KtCtApTfLaQ",
     ]  # A list of playlist IDs
 
 # Used for the bot's invite and login links.

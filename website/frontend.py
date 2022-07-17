@@ -1,5 +1,6 @@
 from typing import Union
 
+import aiohttp
 from aiohttp.web import Request, Response, RouteTableDef
 import aiohttp_session
 from aiohttp_jinja2 import template
@@ -69,8 +70,48 @@ async def raffles(_: Request):
 @routes.get("/videos")
 @template("videos.htm.j2")
 @add_standard_args()
-async def videos(_: Request):
-    return {}
+async def videos(request: Request):
+    videos = await get_videos(request)
+    return {
+        "videos": videos,
+    }
+
+
+async def get_videos(request: Request):
+    """
+    Get the last N videos of a given playlist ID
+    (specified in config, as well as a Google Cloud
+    API key).
+    """
+
+    # Get the playlist IDs
+    api_key = request.app['config']['google']['api_key']
+    playlist_ids = request.app['config']['google']['valid_playists']
+
+    # Get the videos from the channel
+    videos = []
+    url = "https://www.googleapis.com/youtube/v3/playlistItems"  # https://developers.google.com/youtube/v3/docs/playlistItems/list
+    headers = {
+        "User-Agent": request.app['config']['user_agent'],
+    }
+    params = {
+        "part": "snippet,contentDetails",
+        "maxResults": 6,
+        "playlistId": None,
+        "apiKey": api_key,
+    }
+    if playlist_ids:
+        async with aiohttp.ClientSession(headers=headers) as session:
+            for pid in playlist_ids:
+                params["playlistId"] = pid
+                site = await session.get(url, params=params)
+                site.raise_for_status()
+                data = await site.json()
+                videos.extend(data['items'])
+
+    # Format those into a more helpful object
+    videos = [utils.Video(data=d) for d in videos]
+    return videos
 
 
 @routes.get("/contact")

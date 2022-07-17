@@ -13,7 +13,8 @@
         <p class="title">{{ title }}</p>
         <div class="metadata">
             <p data-timestamp="{{ upload_timestamp }}">{{ upload_timestamp }}</p>  <!-- dayjs(1536484369695).fromNow(); -->
-            <p>{{ views }} Views</p>
+            <!-- <p>{{ views }} Views</p> -->
+            <p></p>
         </div>
     </div>
 </div>
@@ -38,53 +39,15 @@
     </iframe>
 </div>
 <div id="videos">
-    {{ 
-        create_video(
-            "Title",
-            "https://picsum.photos/320/180",
-            69,
-            69_000,
-        ) 
-    }}
-    {{ 
-        create_video(
-            "Title",
-            "https://picsum.photos/320/180",
-            69,
-            69_000,
-        ) 
-    }}
-    {{ 
-        create_video(
-            "Title",
-            "https://picsum.photos/320/180",
-            69,
-            69_000,
-        ) 
-    }}
-    {{ 
-        create_video(
-            "Title",
-            "https://picsum.photos/320/180",
-            69,
-            69_000,
-        ) 
-    }}
-    {{ 
-        create_video(
-            "Title",
-            "https://picsum.photos/320/180",
-            69,
-            69_000,
-        ) 
-    }}
-    {{ 
-        create_video(
-            "Title",
-            "https://picsum.photos/320/180",
-            69,
-            69_000,
-        ) 
-    }}
+    {% for v in videos %}
+        {{
+            create_video(
+                v.title,
+                v.thumbnail,
+                v.published_at,
+                69_000,
+            )
+        }}
+    {% endfor %}
 </div>
 {%- endblock content -%}
