@@ -54,9 +54,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.3/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.3/plugin/relativeTime.min.js" integrity="sha512-MVzDPmm7QZ8PhEiqJXKz/zw2HJuv61waxb8XXuZMMs9b+an3LoqOqhOEt5Nq3LY1e4Ipbbd/e+AWgERdHlVgaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-dayjs.extend(window.dayjs_plugin_relativeTime)
+dayjs.extend(window.dayjs_plugin_relativeTime);
 for(i of document.querySelectorAll("p[data-timestamp]")) {
-    i.innerHTML = dayjs(parseFloat(i.dataset.timestamp)).fromNow();
+    i.innerHTML = dayjs(parseFloat(i.dataset.timestamp) * 1_000).fromNow();
 }
 </script>
 {%- endblock content -%}
