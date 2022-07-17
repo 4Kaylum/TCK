@@ -86,7 +86,7 @@ async def get_videos(request: Request):
 
     # Get the playlist IDs
     api_key = request.app['config']['google']['api_key']
-    playlist_ids = request.app['config']['google']['valid_playists']
+    playlist_ids = request.app['config']['google']['valid_playlists']
 
     # Get the videos from the channel
     videos = []
