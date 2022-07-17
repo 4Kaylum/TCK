@@ -36,10 +36,10 @@ class Video:
             thumbnails = data['snippet']['thumbnails']
             if "maxres" in thumbnails:
                 self.thumbnail = thumbnails['maxres']['url']
-            elif "standard" in thumbnails:
-                self.thumbnail = thumbnails['standard']['url']
-            elif "high" in thumbnails:
-                self.thumbnail = thumbnails['high']['url']
+            # elif "standard" in thumbnails:
+            #     self.thumbnail = thumbnails['standard']['url']
+            # elif "high" in thumbnails:
+            #     self.thumbnail = thumbnails['high']['url']
             elif "medium" in thumbnails:
                 self.thumbnail = thumbnails['hmediumigh']['url']
             else:
