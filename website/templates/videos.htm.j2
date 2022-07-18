@@ -6,9 +6,11 @@
 {% set current_page_url = "/videos" %}
 
 
-{% macro create_video(title, thumbnail_url, upload_timestamp, views) %}
+{% macro create_video(title, thumbnail_url, upload_timestamp, views, video_id) %}
 <div class="video">
-    <img src="{{ thumbnail_url }}" />
+    <a href="https://youtu.be/{{ video_id }}">
+        <img src="{{ thumbnail_url }}" />
+    </a>
     <div class="overlay">
         <p class="title">{{ title }}</p>
         <div class="metadata">
@@ -46,6 +48,7 @@
                 v.thumbnail,
                 v.published_at,
                 69_000,
+                v.id,
             )
         }}
     {% endfor %}
