@@ -1,7 +1,7 @@
 from typing import Union
 
 import aiohttp
-from aiohttp.web import Request, Response, RouteTableDef
+from aiohttp.web import Request, Response, RouteTableDef, HTTPFound
 import aiohttp_session
 from aiohttp_jinja2 import template
 from discord.ext import vbu
@@ -119,3 +119,18 @@ async def get_videos(request: Request):
 @add_standard_args()
 async def contact(_: Request):
     return {}
+
+
+
+@routes.get("/admin")
+@template("admin.htm.j2")
+@add_standard_args()
+async def admin(request: Request):
+    session = await aiohttp_session.get_session(request)
+    permissions_int = session.get('user_info', {}).get('permissions', 0)
+    permissions = utils.WebsitePermissions(permissions_int)
+    if not permissions.admin_panel:
+        return HTTPFound("/")
+    return {
+        ...
+    }
