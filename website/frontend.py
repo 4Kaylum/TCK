@@ -27,6 +27,23 @@ def add_standard_args():
     return inner
 
 
+def requires_permission(**kwargs):
+    def inner(func):
+        async def wrapper(request: Request):
+            session = await aiohttp_session.get_session(request)
+            permissions_int = session.get('user_info', {}).get('permissions', 0)
+            permissions = utils.WebsitePermissions(permissions_int)
+            for i, o in kwargs.items():
+                if getattr(permissions, i) == o:
+                    pass
+                else:
+                    return HTTPFound("/")
+            return await func(request)
+        return wrapper
+    return inner
+
+
+
 @routes.get("/")
 @routes.get("/index")
 @template("index.htm.j2")
@@ -124,13 +141,9 @@ async def contact(_: Request):
 
 @routes.get("/admin")
 @template("admin.htm.j2")
+@requires_permission(admin_panel=True)
 @add_standard_args()
 async def admin(request: Request):
-    session = await aiohttp_session.get_session(request)
-    permissions_int = session.get('user_info', {}).get('permissions', 0)
-    permissions = utils.WebsitePermissions(permissions_int)
-    if not permissions.admin_panel:
-        return HTTPFound("/")
     return {
         ...
     }
