@@ -15,5 +15,14 @@
             <link rel="stylesheet" type="text/css" href="{{ static(file) }}" />
         {%- endfor -%}
     {%- endif -%}
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPF6YEH1XJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PPF6YEH1XJ');
+    </script>
 </head>
 {%- endmacro -%}
