@@ -121,3 +121,13 @@
 .secondary-contact .contact .subtitle {
     margin: 10px 0;
 }
+
+@media screen and (max-width: 770px) {
+    #main-contact .contact {
+        width: 100%
+    }
+    
+    .secondary-contact .contact {
+        width: 100%
+    }
+}
