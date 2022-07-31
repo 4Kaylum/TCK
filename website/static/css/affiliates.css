@@ -10,7 +10,6 @@
     width: calc(100vw - 20px);
     height: 230px;
     overflow: hidden;
-    mix-blend-mode: overlay;
     margin: 0 -20px 0 -20px;
     background: #35477c;
 }
@@ -59,7 +58,6 @@
     align-self: center;
     margin-top: 20px;
     z-index: 10;
-    max-width: 80%;
 }
 
 .affiliate-block {
