@@ -1,25 +1,13 @@
-class WebsitePermissions:
+from .flags import Flags, flag_value
 
-    VALID_FLAGS = {
-        "admin_panel": 0b000_000_000_001,
-    }
 
-    def __init__(self, value: int = 0, **kwargs):
-        self.value = value
-        for i, o in kwargs.items():
-            setattr(self, i, o)
+__all__ = (
+    'WebsitePermissions',
+)
 
-    @classmethod
-    def all(cls):
-        return cls(0b111_111_111_111)
 
-    @property
-    def admin_panel(self) -> bool:
-        return bool(self.value & self.VALID_FLAGS['admin_panel'])
+class WebsitePermissions(Flags):
 
-    @admin_panel.setter
-    def admin_panel(self, v: bool):
-        if v:
-            self.value |= self.VALID_FLAGS['admin_panel']
-        else:
-            self.value &= ~self.VALID_FLAGS['admin_panel']
+    @flag_value
+    def admin_panel(self):
+        return 0b000_001
