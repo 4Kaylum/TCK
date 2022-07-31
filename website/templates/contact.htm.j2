@@ -7,12 +7,12 @@
 
 
 {% macro create_main_contact(name, social_logo, image, url, colour) %}
-<div class="contact">
+<div class="contact" style="--colour: {{ colour }}">
     <img class="underlay" src="{{ static('/images/social_background.png') }}" />
-    <div class="overlay" style="--overlay: {{ colour }}"></div>
+    <div class="overlay"></div>
     <div class="information">
         <img class="profile-picture" src="{{ image }}" />
-        <a href="{{ url }}">
+        <a href="{{ url }}" target="_blank">
             <h1 class="name">{{ name }}</h1>
         </a>
         <img class="logo" src="{{ social_logo }}" />
@@ -36,36 +36,54 @@
             create_main_contact(
                 "@TCKTwitch",
                 static("/images/contact/twitter.png"),
-                "https://picsum.photos/100/100",
-                "#",
-                "#379FFF",
+                static("/images/profile_pictures/twitter.png"),
+                "https://twitter.com/TCKTwitch",
+                "55, 159, 255",
             )
         }}
         {{
             create_main_contact(
-                "@TCKTwitch",
-                static("/images/contact/twitter.png"),
-                "https://picsum.photos/100/100",
-                "#",
-                "#379FFF",
+                "@LiveTCK",
+                static("/images/contact/tiktok.png"),
+                static("/images/profile_pictures/tiktok.png"),
+                "https://www.tiktok.com/@livetck",
+                "255, 0, 79",
             )
         }}
         {{
             create_main_contact(
-                "@TCKTwitch",
-                static("/images/contact/twitter.png"),
-                "https://picsum.photos/100/100",
-                "#",
-                "#379FFF",
+                "TCK",
+                static("/images/contact/youtube.png"),
+                static("/images/profile_pictures/youtube.png"),
+                "https://www.youtube.com/channel/UCJZcsYCqoQ13KtCtApTfLaQ",
+                "255, 0, 0",
             )
         }}
         {{
             create_main_contact(
-                "@TCKTwitch",
-                static("/images/contact/twitter.png"),
-                "https://picsum.photos/100/100",
-                "#",
-                "#379FFF",
+                "@LiveTCK",
+                static("/images/contact/twitch.png"),
+                static("/images/profile_pictures/twitch.png"),
+                "https://www.twitch.tv/livetck",
+                "160, 85, 235",
+            )
+        }}
+        {{
+            create_main_contact(
+                "Discord",
+                static("/images/contact/discord.png"),
+                static("/images/profile_pictures/discord.png"),
+                "https://discord.gg/tck",
+                "88, 101, 242",
+            )
+        }}
+        {{
+            create_main_contact(
+                "@LiveTCK",
+                static("/images/contact/instagram.png"),
+                static("/images/profile_pictures/instagram.png"),
+                "https://instagram.com/livetck",
+                "211, 61, 150",
             )
         }}
     </div>

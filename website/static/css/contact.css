@@ -15,10 +15,16 @@
 
 .contact {
     display: block;
-    max-width: 300px;
-    margin: 10px 10px 60px 10px;
+    width: 230px;
+    height: 150px;
+    margin: 20px 10px 100px 10px;
     position: relative;
     border-radius: 10px;
+}
+
+.contact .profile-picture {
+    height: 100px;
+    width: 100px;
 }
 
 .contact .overlay,
@@ -36,10 +42,16 @@
     height: 100%;
     border-radius: 10px;
     margin-top: 50px;
+    margin-left: -2px;
+    background: linear-gradient(0deg, rgb(var(--colour)) 0%, rgba(var(--colour), 0.2) 50%, rgba(var(--colour), 0) 100%);
+    padding: 2px;
 }
 
 .contact .overlay {
     z-index: 20;
+    background: linear-gradient(0deg, rgba(var(--colour), 0.5) 0%, rgba(var(--colour), 0.2) 50%, rgba(var(--colour), 0) 100%);
+    top: 52px;
+    border-radius: 5px;
 }
 
 .contact .information {
@@ -53,12 +65,19 @@
     border-radius: 50%;
 }
 
-.contact .information .name {
+.contact .information .name{
     margin: 0;
-    margin-top: 42px;
+    margin-top: 20px;
+    font-size: 1.5em;
 }
 
 .contact .information .logo {
-    margin-top: 52px;
+    margin-top: 30px;
     width: 40px;
+}
+
+.contact a,
+.contact a:visited {
+    color: white;
+    text-decoration: none;
 }
