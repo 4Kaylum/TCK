@@ -8,6 +8,7 @@
 {% set navbar_links = [
     ("/", "Affiliates"),
     ("/videos", "Videos"),
+    ("/contact", "Contact"),
 ] %}
 
 
@@ -28,7 +29,9 @@
         </a>
     </div>
     <div class="links">
-        <img class="logo" src="{{ static('/images/logo.png') }}" />
+        <a href="/">
+            <img class="logo" src="{{ static('/images/logo.png') }}" />
+        </a>
         {% for href, text in navbar_links %}
             <a href="{{ href }}"{% if href == current_page %} class="active"{% endif %}>{{ text }}</a>
         {% endfor %}
