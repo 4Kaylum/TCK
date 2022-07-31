@@ -1,4 +1,4 @@
-{%- macro add_head(page_title, css_files) -%}
+{%- macro add_head(page_title, page_description, css_files) -%}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,5 +24,13 @@
         gtag('js', new Date());
         gtag('config', 'G-PPF6YEH1XJ');
     </script>
+
+    <meta name="og:site_name" content="TCK.gg" />
+    <meta name="og:title" content="{{ page_title }}" />
+    <meta name="og:image" content='{{ static("/images/logo.png") }}' />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{ page_title }}" />
+    <meta name="twitter:description" content="{{ page_description }}" />
+    <meta name="og:description" content="{{ page_description }}" />
 </head>
 {%- endmacro -%}
