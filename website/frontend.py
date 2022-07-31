@@ -149,3 +149,19 @@ async def contact(_: Request):
 @add_standard_args()
 async def admin_index(_: Request):
     return {}
+
+
+@routes.get("/admin/leaderboard")
+@template("admin/leaderboard.htm.j2")
+@requires_permission(admin_panel=True)
+@add_standard_args()
+async def admin_leaderboard(_: Request):
+    return {}
+
+
+@routes.get("/admin/raffles")
+@template("admin/raffles.htm.j2")
+@requires_permission(admin_panel=True)
+@add_standard_args()
+async def admin_raffles(_: Request):
+    return {}
