@@ -1,5 +1,7 @@
 #content {
     flex-direction: column;
+    max-width: 1260px;
+    margin: auto;
 }
 
 #main-contact {
@@ -10,25 +12,25 @@
 
 .contact-block {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-.contact {
+#main-contact .contact {
     display: block;
     width: 230px;
     height: 150px;
-    margin: 20px 10px 100px 10px;
+    margin: 20px 10px 60px 10px;
     position: relative;
     border-radius: 10px;
 }
 
-.contact .profile-picture {
+#main-contact .contact .profile-picture {
     height: 100px;
     width: 100px;
 }
 
-.contact .overlay,
-.contact .information {
+#main-contact .contact .overlay,
+#main-contact .contact .information {
     top: 0;
     left: 0;
     position: absolute;
@@ -36,7 +38,7 @@
     height: 100%;
 }
 
-.contact .underlay {
+#main-contact .contact .underlay {
     z-index: 10;
     width: 100%;
     height: 100%;
@@ -47,7 +49,7 @@
     padding: 2px;
 }
 
-.contact .overlay {
+#main-contact .contact .overlay {
     z-index: 20;
     background: linear-gradient(0deg, rgba(var(--colour), 0.5) 0%, rgba(var(--colour), 0.2) 50%, rgba(var(--colour), 0) 100%);
     top: 52px;
@@ -61,23 +63,61 @@
     align-items: center;
 }
 
-.contact .information .profile-picture {
+#main-contact .contact .information .profile-picture {
     border-radius: 50%;
 }
 
-.contact .information .name{
+#main-contact .contact .information .name{
     margin: 0;
     margin-top: 20px;
     font-size: 1.5em;
 }
 
-.contact .information .logo {
+#main-contact .contact .information .logo {
     margin-top: 30px;
     width: 40px;
 }
 
-.contact a,
-.contact a:visited {
+#main-contact .contact a,
+#main-contact .contact a:visited {
     color: white;
     text-decoration: none;
+}
+
+.secondary-contact {
+    margin-top: 30px;
+    --colour: 55, 159, 255;
+}
+
+.secondary-contact .contact {
+    border: 2px solid var(--colour);
+    background: linear-gradient(0deg, rgba(var(--colour), 0.5) 0%, rgba(var(--colour), 0.2) 50%, rgba(var(--colour), 0) 100%);
+    padding: 10px;
+    width: 200px;
+    margin: 10px 10px 0 0;
+    border-radius: 10px;
+}
+
+.secondary-contact .contact .links {
+    display: flex;
+    align-items: center;
+}
+
+.secondary-contact .contact .links img{
+    width: 30px;
+    margin-right: 5px;
+}
+
+.secondary-contact .contact a,
+.secondary-contact .contact a:visited {
+    text-decoration: none;
+}
+
+.secondary-contact .contact .name {
+    font-weight: bold;
+    margin: 10px 0 0 0;
+}
+
+.secondary-contact .contact .subtitle {
+    margin: 10px 0;
 }
