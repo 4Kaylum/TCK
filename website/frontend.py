@@ -31,13 +31,16 @@ def requires_permission(**kwargs):
     def inner(func):
         async def wrapper(request: Request):
             session = await aiohttp_session.get_session(request)
-            permissions_int = session.get('user_info', {}).get('permissions', 0)
+            user_info = session.get('user_info', {})
+            permissions_int = user_info.get('permissions', 0)
             permissions = utils.WebsitePermissions(permissions_int)
             for i, o in kwargs.items():
                 if getattr(permissions, i) == o:
                     pass
                 else:
-                    return HTTPFound("/")
+                    if user_info:
+                        return HTTPFound("/")
+                    return HTTPFound("/login")
             return await func(request)
         return wrapper
     return inner
@@ -107,7 +110,8 @@ async def get_videos(request: Request):
 
     # Get the videos from the channel
     videos = []
-    url = "https://www.googleapis.com/youtube/v3/playlistItems"  # https://developers.google.com/youtube/v3/docs/playlistItems/list
+    url = "https://www.googleapis.com/youtube/v3/playlistItems"
+    # https://developers.google.com/youtube/v3/docs/playlistItems/list
     headers = {
         "User-Agent": request.app['config']['user_agent'],
     }
@@ -138,12 +142,10 @@ async def contact(_: Request):
     return {}
 
 
-
 @routes.get("/admin")
-@template("admin.htm.j2")
+@routes.get("/admin/")
+@template("admin/index.htm.j2")
 @requires_permission(admin_panel=True)
 @add_standard_args()
-async def admin(request: Request):
-    return {
-        ...
-    }
+async def admin_index(_: Request):
+    return {}

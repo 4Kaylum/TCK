@@ -1,0 +1,16 @@
+{% extends "base/body.htm.j2" %}
+
+
+{% set page_title = "TCK - Admin" %}
+{% set css_files = ["/css/admin.css"] %}
+{% set current_page_url = "/admin" %}
+
+
+{%- block content -%}
+<div id="links">
+    <ul>
+        <li><a href="/admin/leaderboard">Leaderboard</a></li>
+        <li><a href="/admin/raffles">Raffles</a></li>
+    </ul>
+</div>
+{%- endblock content -%}
