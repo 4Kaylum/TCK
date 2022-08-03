@@ -159,9 +159,10 @@ async def submit_leaderboard_changes(request: Request):
     data = await request.json()
 
     # Add that to the database
+    new_data = []
     async with vbu.Database() as db:
         for row in data:
-            await db.call(
+            new_row = await db.call(
                 """
                 INSERT INTO
                     leaderboards
@@ -173,12 +174,19 @@ async def submit_leaderboard_changes(request: Request):
                 DO UPDATE
                 SET
                     name = excluded.name,
-                    amount = excluded.amount,
+                    amount = excluded.amount
+                RETURNING
+                    *
                 """,
                 row['index'], row['name'], row['amount'],
             )
+            new_data.append(new_row)
 
     # And done
     return json_response({
         "message": "Leaderboards updated successfully! :3",
+        "data": [
+            dict(i)
+            for i in new_data
+        ],
     })
