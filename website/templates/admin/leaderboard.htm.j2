@@ -31,6 +31,7 @@
                 type="text"
                 name="amount"
                 step="0.01"
+                min="0"
                 value="{{ i.amount / 100 }}"
                 data-index="{{ i.index }}"
                 placeholder="Amount of money (USD)"
@@ -38,7 +39,12 @@
     </div>
 {% endfor %}
 
+<button onclick="submitChanges().then(alert)">Submit Changes</button>
+
 <script type="text/javascript">
+/**
+ * Change the meta input for the leaderboard items.
+ * */
 function changeLeaderboardItemMeta(attr, inputNode) {
     let index = inputNode.dataset.index;
     let selector = `.leaderboard-item input[name="item-data"][data-index="${index}"]`;
@@ -49,6 +55,33 @@ function changeLeaderboardItemMeta(attr, inputNode) {
     else {
         meta.dataset[attr] = inputNode.value;
     }
+}
+
+
+/**
+ * Submit changes to the API.
+ * */
+async function submitChanges() {
+    let rawSubmitData = document.querySelectorAll('.leaderboard-item input[name="item-data"]');
+    let submitData = [];
+    for(let i of rawSubmitData) {
+        submitData.push({
+            index: rawSubmitData.dataset.index,
+            name: rawSubmitData.dataset.name,
+            amount: rawSubmitData.dataset.amount,
+        });
+    }
+    let site = await fetch(
+        "/api/submit_leaderboard_changes",
+        {
+            method: "POST",
+            body: JSON.stringify({
+
+            })
+        },
+    );
+    let json = await site.json();
+    return json.message;
 }
 </script>
 {%- endblock content -%}

@@ -1,8 +1,5 @@
-from typing import Union
-
 import aiohttp
-from aiohttp.web import Request, Response, RouteTableDef, HTTPFound
-import aiohttp_session
+from aiohttp.web import Request, RouteTableDef
 from aiohttp_jinja2 import template
 from discord.ext import vbu
 
@@ -12,59 +9,25 @@ from cogs import utils
 routes = RouteTableDef()
 
 
-def add_standard_args():
-    def inner(func):
-        async def wrapper(request: Request):
-            d: Union[None, Response, dict] = await func(request)
-            if d is None:
-                d = {}
-            elif isinstance(d, Response):
-                return d
-            d['session'] = await aiohttp_session.get_session(request)
-            d['request'] = request
-            return d
-        return wrapper
-    return inner
-
-
-def requires_permission(**kwargs):
-    def inner(func):
-        async def wrapper(request: Request):
-            session = await aiohttp_session.get_session(request)
-            user_info = session.get('user_info', {})
-            permissions_int = user_info.get('permissions', 0)
-            permissions = utils.WebsitePermissions(permissions_int)
-            for i, o in kwargs.items():
-                if getattr(permissions, i) == o:
-                    pass
-                else:
-                    if user_info:
-                        return HTTPFound("/")
-                    return HTTPFound("/login")
-            return await func(request)
-        return wrapper
-    return inner
-
-
 
 @routes.get("/")
 @routes.get("/index")
 @template("index.htm.j2")
-@add_standard_args()
+@utils.add_standard_args()
 async def index(_: Request):
     return {}
 
 
 @routes.get("/leaderboard")
 @template("leaderboard.htm.j2")
-@add_standard_args()
+@utils.add_standard_args()
 async def leaderboard(_: Request):
     return {}
 
 
 @routes.get("/raffles")
 @template("raffles.htm.j2")
-@add_standard_args()
+@utils.add_standard_args()
 async def raffles(_: Request):
     async with vbu.Database() as db:
         rows = await db.call(
@@ -89,7 +52,7 @@ async def raffles(_: Request):
 
 @routes.get("/videos")
 @template("videos.htm.j2")
-@add_standard_args()
+@utils.add_standard_args()
 async def videos(request: Request):
     videos = await get_videos(request)
     return {
@@ -137,7 +100,7 @@ async def get_videos(request: Request):
 
 @routes.get("/contact")
 @template("contact.htm.j2")
-@add_standard_args()
+@utils.add_standard_args()
 async def contact(_: Request):
     return {}
 
@@ -145,16 +108,16 @@ async def contact(_: Request):
 @routes.get("/admin")
 @routes.get("/admin/")
 @template("admin/index.htm.j2")
-@requires_permission(admin_panel=True)
-@add_standard_args()
+@utils.requires_permission(admin_panel=True)
+@utils.add_standard_args()
 async def admin_index(_: Request):
     return {}
 
 
 @routes.get("/admin/leaderboard")
 @template("admin/leaderboard.htm.j2")
-@requires_permission(admin_panel=True)
-@add_standard_args()
+@utils.requires_permission(admin_panel=True)
+@utils.add_standard_args()
 async def admin_leaderboard(_: Request):
     async with vbu.Database() as db:
         rows = await db.call(
@@ -177,7 +140,7 @@ async def admin_leaderboard(_: Request):
 
 @routes.get("/admin/raffles")
 @template("admin/raffles.htm.j2")
-@requires_permission(admin_panel=True)
-@add_standard_args()
+@utils.requires_permission(admin_panel=True)
+@utils.add_standard_args()
 async def admin_raffles(_: Request):
     return {}
