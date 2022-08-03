@@ -148,7 +148,7 @@ async def login(request: Request):
     return HTTPFound(location=f"https://id.twitch.tv/oauth2/authorize?{params}")
 
 
-@routes.get("/api/submit_leaderboard_changes")
+@routes.post("/api/submit_leaderboard_changes")
 @utils.requires_permission(admin_panel=True)
 async def submit_leaderboard_changes(request: Request):
     """

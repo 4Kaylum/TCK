@@ -25,3 +25,8 @@
 .leaderboard-item input[name="amount"] {
     width: 20%;
 }
+
+button {
+    margin-top: 10px;
+    height: 30px;
+}
