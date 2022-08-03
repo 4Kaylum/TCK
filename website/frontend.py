@@ -22,7 +22,23 @@ async def index(_: Request):
 @template("leaderboard.htm.j2")
 @utils.add_standard_args()
 async def leaderboard(_: Request):
-    return {}
+    async with vbu.Database() as db:
+        rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                leaderboards
+            ORDER BY
+                index DESC
+            """
+        )
+    leaderboard_items = [None] * 10
+    for i in rows:
+        leaderboard_items[i['index'] - 1] = dict(i)
+    return {
+        "leaderboard_items": leaderboard_items,
+    }
 
 
 @routes.get("/raffles")
