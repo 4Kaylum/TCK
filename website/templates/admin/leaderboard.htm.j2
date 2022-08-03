@@ -8,9 +8,9 @@
 
 
 {%- block content -%}
-    {% for index, i in enumerate(leaderboard_items) %}
+    {% for i in leaderboard_items %}
         {% if i is none %}
-            {% set i = {"index": index + 1, "name": "", "amount": 0} %}
+            {% set i = {"index": loop.index0 + 1, "name": "", "amount": 0} %}
         {% endif %}
         <div class="leaderboard-item">
             <input type="hidden" name="index" value="{{ i.index }}" />
@@ -23,6 +23,7 @@
             <input
                     type="text"
                     name="amount"
+                    step="0.01"
                     value="{{ i.amount / 100 }}"
                     placeholder="Amount of money (USD)" />
         </div>
