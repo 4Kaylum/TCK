@@ -169,7 +169,7 @@ async def admin_leaderboard(_: Request):
         )
     leaderboard_items = [None] * 10
     for i in rows:
-        leaderboard_items[i['index']] = dict(i)
+        leaderboard_items[i['index'] - 1] = dict(i)
     return {
         "leaderboard_items": leaderboard_items,
     }
