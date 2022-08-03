@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS raffles(
 -- a given raffle.
 
 
-CREATE TABLE leaderboards(
+CREATE TABLE IF NOT EXISTS leaderboards(
     index INTEGER PRIMARY KEY,
     name TEXT,
     amount INTEGER
