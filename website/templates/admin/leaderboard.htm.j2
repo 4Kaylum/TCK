@@ -66,9 +66,9 @@ async function submitChanges() {
     let submitData = [];
     for(let i of rawSubmitData) {
         submitData.push({
-            index: rawSubmitData.dataset.index,
-            name: rawSubmitData.dataset.name,
-            amount: rawSubmitData.dataset.amount,
+            index: i.dataset.index,
+            name: i.dataset.name,
+            amount: i.dataset.amount,
         });
     }
     let site = await fetch(
