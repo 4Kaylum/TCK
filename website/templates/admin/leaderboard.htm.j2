@@ -43,7 +43,12 @@ function changeLeaderboardItemMeta(attr, inputNode) {
     let index = inputNode.dataset.index;
     let selector = `.leaderboard-item input[name="item-data"][data-index="${index}"]`;
     let meta = document.querySelector(selector);
-    meta.dataset[attr] = inputNode.value;
+    if(attr == 'amount') {
+        meta.dataset[attr] = parseFloat(inputNode.value) * 100;
+    }
+    else {
+        meta.dataset[attr] = inputNode.value;
+    }
 }
 </script>
 {%- endblock content -%}
