@@ -14,7 +14,7 @@
             <p class="name">{{ name }}</p>
         </div>
         <div>
-            <p class="points">{{ points }}</p>
+            <p class="points">{{ '$%.2f'|format(points / 100) }}</p>
         </div>
     </li>
 {%- endmacro -%}
@@ -41,7 +41,7 @@
     <div class="leader {{ class }}">
         <div class="leader-info">
             <p class="name">{{ i.name }}</p>
-            <p class="points">${{ i.amount / 100 }}</p>
+            <p class="points">${{ '$%.2f'|format(i.amount / 100) }}</p>
             <p class="place">{{ place }}</p>
         </div>
     </div>
