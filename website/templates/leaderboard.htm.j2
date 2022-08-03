@@ -41,7 +41,7 @@
     <div class="leader {{ class }}">
         <div class="leader-info">
             <p class="name">{{ i.name }}</p>
-            <p class="points">${{ '$%.2f'|format(i.amount / 100) }}</p>
+            <p class="points">{{ '$%.2f'|format(i.amount / 100) }}</p>
             <p class="place">{{ place }}</p>
         </div>
     </div>
