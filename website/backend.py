@@ -180,7 +180,7 @@ async def submit_leaderboard_changes(request: Request):
                 """,
                 int(row['index']), row['name'], int(row['amount']),
             )
-            new_data.append(new_row)
+            new_data.append(new_row[0])
 
     # And done
     return json_response({
