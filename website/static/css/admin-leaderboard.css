@@ -1,0 +1,27 @@
+#content {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: auto;
+}
+
+.leaderboard-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.leaderboard-item p {
+    margin: 5px 0;
+    width: 25px;
+    text-align: right;
+}
+
+.leaderboard-item input[name="name"] {
+    width: 70%;
+}
+
+.leaderboard-item input[name="amount"] {
+    width: 20%;
+}
