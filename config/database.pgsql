@@ -60,3 +60,10 @@ CREATE TABLE IF NOT EXISTS raffles(
 -- always be overriden to be 1.
 -- max_entries INTEGER? the maximum number of times that a user can enter
 -- a given raffle.
+
+
+CREATE TABLE leaderboards(
+    index INTEGER PRIMARY KEY,
+    name TEXT,
+    amount INTEGER
+);

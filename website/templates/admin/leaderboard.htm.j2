@@ -8,4 +8,23 @@
 
 
 {%- block content -%}
+    {% for index, i in enumerate(leaderboard_items) %}
+        {% if i is none %}
+            {% set i = {"index": index + 1, "name": "", "amount": 0} %}
+        {% endif %}
+        <div class="leaderboard-item">
+            <input type="hidden" name="index" value="{{ i.index }}" />
+            <p>{{ i.index }}</p>
+            <input
+                    type="text"
+                    name="name"
+                    value="{{ i.name }}"
+                    placeholder="User's name" />
+            <input
+                    type="text"
+                    name="amount"
+                    value="{{ i.amount / 100 }}"
+                    placeholder="Amount of money (USD)" />
+        </div>
+    {% endfor %}
 {%- endblock content -%}

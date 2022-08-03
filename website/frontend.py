@@ -156,7 +156,23 @@ async def admin_index(_: Request):
 @requires_permission(admin_panel=True)
 @add_standard_args()
 async def admin_leaderboard(_: Request):
-    return {}
+    async with vbu.Database() as db:
+        rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                leaderboards
+            ORDER BY
+                index DESC
+            """
+        )
+    leaderboard_items = [None] * 10
+    for i in rows:
+        leaderboard_items[i['index']] = dict(i)
+    return {
+        "leaderboard_items": leaderboard_items,
+    }
 
 
 @routes.get("/admin/raffles")
