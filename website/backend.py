@@ -178,7 +178,7 @@ async def submit_leaderboard_changes(request: Request):
                 RETURNING
                     *
                 """,
-                row['index'], row['name'], row['amount'],
+                int(row['index']), row['name'], int(row['amount']),
             )
             new_data.append(new_row)
 
