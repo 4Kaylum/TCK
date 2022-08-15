@@ -1,0 +1,56 @@
+#content {
+    flex-direction: column;
+    align-items: center;
+}
+
+.raffle-item {
+    width: 600px;
+    border: 0px solid white;
+    border-radius: 20px;
+    background: var(--secondary-blue);
+    box-shadow: 0px 0px  2px 2px var(--primary-blue);
+    padding: 20px;
+}
+
+.raffle-item:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.raffle-item .attribute-bank {
+    width: 100%;
+    margin-bottom: .25rem;
+}
+
+.raffle-item .attribute-bank label {
+    display: block;
+}
+
+.raffle-item .attribute-bank input {
+    width: calc(100% - 2rem);
+    font-size: 16px;
+    margin-left: 1rem; 
+    font-family: inherit;
+}
+
+#content button {
+    --button-colour: lightgreen;
+    width: 100%;
+    margin-top: .75rem;
+    font-family: inherit;
+    padding: 5px;
+    font-weight: bold;
+    background: var(--button-colour);
+    border: 1px solid var(--button-colour);
+    box-shadow: 0 0 2px 2px white;
+    border-radius: 5px;
+}
+
+#content > button {
+    --button-colour: lightblue;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+#content button[name="item-delete"] {
+    --button-colour: hsl(0, 100%, 75%);  /* A nice red */
+}

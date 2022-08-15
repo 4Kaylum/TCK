@@ -1,3 +1,5 @@
+from datetime import datetime as dt
+from typing import Optional
 from urllib.parse import urlencode
 
 import aiohttp
@@ -10,6 +12,27 @@ from cogs import utils
 
 
 routes = RouteTableDef()
+
+
+def try_parse_time(input_time: str, parse) -> Optional[dt]:
+    try:
+        return dt.strptime(input_time, parse)
+    except:
+        return None
+
+
+def parse_time(input_time: str) -> dt:
+    formats = [
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M",
+        "%Y-%m-%d %H:%M",
+    ]
+    for f in formats:
+        t = try_parse_time(input_time, f)
+        if t:
+            return t
+    raise TypeError()
 
 
 @routes.get("/login_processor/discord")
@@ -148,9 +171,9 @@ async def login(request: Request):
     return HTTPFound(location=f"https://id.twitch.tv/oauth2/authorize?{params}")
 
 
-@routes.post("/api/submit_leaderboard_changes")
+@routes.put("/api/leaderboard")
 @utils.requires_permission(admin_panel=True)
-async def submit_leaderboard_changes(request: Request):
+async def put_leaderboard(request: Request):
     """
     Get submitted changes from the leaderboard admin page.
     """
@@ -189,4 +212,121 @@ async def submit_leaderboard_changes(request: Request):
             dict(i)
             for i in new_data
         ],
+    })
+
+
+@routes.put("/api/raffle")
+@utils.requires_permission(admin_panel=True)
+async def put_raffle(request: Request):
+    """
+    Get submitted changes from the raffle admin page.
+    """
+
+    # Get the json data from the request
+    raffle_data = await request.json()
+
+    # See if this raffle has an ID; if not then it's new
+    raffle_is_new = not bool(raffle_data.get('id'))
+
+    # Add that to the database
+    async with vbu.Database() as db:
+        if raffle_is_new:
+            new_rows = await db.call(
+                """
+                INSERT INTO
+                    raffles
+                    (
+                        id,
+                        name,
+                        start_time,
+                        end_time,
+                        description,
+                        image,
+                        entry_price,
+                        max_entries,
+                        deleted
+                    )
+                VALUES
+                    (
+                        uuid_generate_v4(),
+                        $1,
+                        TIMEZONE('UTC', NOW()),
+                        $2,
+                        $3,
+                        $4,
+                        $5,
+                        $6,
+                        FALSE
+                    )
+                RETURNING
+                    *
+                """,
+                raffle_data['name'], parse_time(raffle_data['end_time']),
+                raffle_data['description'], raffle_data['image'],
+                raffle_data['entry_price'], raffle_data['max_entries'],
+            )
+        else:
+            new_rows = await db.call(
+                """
+                UPDATE
+                    raffles
+                SET
+                    name = $2,
+                    end_time = $3,
+                    description = $4,
+                    image = $5
+                WHERE
+                    id = $1
+                RETURNING
+                    *
+                """,
+                raffle_data['id'], raffle_data['name'],
+                parse_time(raffle_data['end_time']),
+                raffle_data['description'], raffle_data['image'],
+            )
+
+    # And done
+    if raffle_is_new:
+        message = "Raffle created successfully! :3"
+    else:
+        message = "Raffle updated successfully! :3"
+    new_data = dict(new_rows[0])
+    new_data['id'] = str(new_data['id'])
+    new_data['start_time'] = new_data['start_time'].replace(microsecond=0).isoformat()
+    new_data['end_time'] = new_data['end_time'].replace(microsecond=0).isoformat()
+    return json_response({
+        "message": message,
+        "data": [
+            new_data
+        ],
+    })
+
+
+@routes.delete("/api/raffle/{id}")
+@utils.requires_permission(admin_panel=True)
+async def delete_raffle(request: Request):
+    """
+    Set a raffle to deleted
+    """
+
+    # Get the json data from the request
+    raffle_id = request.match_info['id']
+
+    # Add that to the database
+    async with vbu.Database() as db:
+        await db.call(
+            """
+            UPDATE
+                raffles
+            SET
+                deleted = TRUE
+            WHERE
+                id = $1
+            """,
+            raffle_id,
+        )
+
+    return json_response({
+        "message": "Raffle deleted :3",
+        "data": [],
     })

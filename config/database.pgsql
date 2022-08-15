@@ -45,8 +45,9 @@ CREATE TABLE IF NOT EXISTS raffles(
     end_time TIMESTAMP NOT NULL,
     description TEXT,
     image TEXT,
-    entry_price INTEGER DEFAULT NULL,
-    max_entries INTEGER DEFAULT NULL
+    entry_price INTEGER DEFAULT 0,
+    max_entries INTEGER DEFAULT 1,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 -- id UUID the ID of the raffle.
 -- name TEXT the name of the item being raffled.

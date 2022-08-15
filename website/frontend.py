@@ -22,6 +22,10 @@ async def index(_: Request):
 @template("leaderboard.htm.j2")
 @utils.add_standard_args()
 async def leaderboard(_: Request):
+    """
+    Show all of the users that are to appear on the leaderboard page.
+    """
+
     async with vbu.Database() as db:
         rows = await db.call(
             """
@@ -45,6 +49,11 @@ async def leaderboard(_: Request):
 @template("raffles.htm.j2")
 @utils.add_standard_args()
 async def raffles(_: Request):
+    """
+    Grab all of the data for the raffles page, allowing users to
+    enter each raffle or giveaway.
+    """
+
     async with vbu.Database() as db:
         rows = await db.call(
             """
@@ -53,7 +62,11 @@ async def raffles(_: Request):
             FROM
                 raffles
             WHERE
+                deleted IS FALSE
+            AND
                 end_time > TIMEZONE('UTC', NOW())
+            AND
+                start_time <= TIMEZONE('UTC', NOW())
             """,
         )
     raffles = [
@@ -70,6 +83,10 @@ async def raffles(_: Request):
 @template("videos.htm.j2")
 @utils.add_standard_args()
 async def videos(request: Request):
+    """
+    Get all the videos and show em uwu.
+    """
+
     videos = await get_videos(request)
     return {
         "videos": videos,
@@ -159,4 +176,24 @@ async def admin_leaderboard(_: Request):
 @utils.requires_permission(admin_panel=True)
 @utils.add_standard_args()
 async def admin_raffles(_: Request):
-    return {}
+    async with vbu.Database() as db:
+        rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                raffles
+            WHERE
+                deleted = FALSE
+            ORDER BY
+                start_time
+                DESC
+            """,
+        )
+    raffles = [
+        utils.Raffle(data=i)
+        for i in rows
+    ]
+    return {
+        "raffles": raffles,
+    }

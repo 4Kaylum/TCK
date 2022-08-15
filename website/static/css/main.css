@@ -102,6 +102,37 @@ header .login span {
     margin: 0;
 }
 
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    font-size: 0;
+}
+
+.loading::after {
+    --spinner-color: white;
+    content: "";
+    font-size: initial;
+    border: 2px solid var(--spinner-color);
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    border-radius: 50%;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+
 @media screen and (max-width: 1100px) {
     header {
         padding: 20px 10px;

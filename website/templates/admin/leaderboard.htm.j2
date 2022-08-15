@@ -72,9 +72,9 @@ async function submitChanges() {
         });
     }
     let site = await fetch(
-        "/api/submit_leaderboard_changes",
+        "/api/leaderboard",
         {
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify(submitData),
         },
     );

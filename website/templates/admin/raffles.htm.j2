@@ -2,10 +2,264 @@
 
 
 {% set page_title = "TCK - Raffle Admin" %}
-{% set css_files = ["/css/raffle-admin.css"] %}
+{% set css_files = ["/css/admin-raffle.css"] %}
 {% set current_page_url = "/admin/raffles" %}
 {% set page_description = "" %}
 
 
+{% macro create_raffle(
+        id,
+        name,
+        start_time,
+        end_time,
+        description,
+        image,
+        entry_price,
+        max_entries,
+        ended,
+        deleted) %}
+<div class="raffle-item" data-ended="{{ ended or deleted }}">
+    <div class="attribute-bank">
+        <label for="name">Name</label>
+        <input
+                type="text"
+                name="name"
+                value="{{ name }}"
+                data-id="{{ id }}"
+                required
+                onchange="changeItemMeta('name', this);" />
+    </div>
+
+    <div class="attribute-bank">
+        <label for="start-time">Start Time</label>
+        <input
+                type="datetime-local"
+                name="start-time"
+                {% if start_time %}
+                    value="{{ start_time.isoformat() }}"
+                {% else %}
+                    value=""
+                {% endif %}
+                data-id="{{ id }}"
+                onchange="changeItemMeta('startTime', this);"
+                disabled />
+    </div>
+
+    <div class="attribute-bank">
+        <label for="end-time">End Time</label>
+        <input
+                type="datetime-local"
+                name="end-time"
+                {% if end_time %}
+                    value="{{ end_time.isoformat() }}"
+                {% else %}
+                    value=""
+                {% endif %}
+                data-id="{{ id }}"
+                required
+                onchange="changeItemMeta('endTime', this);" />
+    </div>
+
+    <div class="attribute-bank">
+        <label for="description">Description</label>
+        <input
+                type="text"
+                name="description"
+                value="{{ description }}"
+                data-id="{{ id }}"
+                required
+                onchange="changeItemMeta('description', this);" />
+    </div>
+
+    <div class="attribute-bank">
+        <label for="image">Image</label>
+        <input
+                type="text"
+                name="image"
+                value="{{ image }}"
+                data-id="{{ id }}"
+                required
+                onchange="changeItemMeta('image', this);" />
+    </div>
+
+    <div class="attribute-bank">
+        <label for="entry-price">Entry Price</label>
+        <input
+                type="number"
+                name="entry-price"
+                value="{{ entry_price or 0 }}"
+                min="0"
+                step="1"
+                data-id="{{ id }}"
+                required
+                onchange="changeItemMeta('entryPrice', this);"
+                {% if id %}
+                    disabled
+                {% endif %} />
+    </div>
+
+    <div class="attribute-bank">
+        <label for="max-entries">Max Entries</label>
+        <input
+                type="number"
+                name="max-entries"
+                value="{{ max_entries or 1 }}"
+                min="1"
+                step="1"
+                data-id="{{ id }}"
+                required
+                onchange="changeItemMeta('maxEntries', this);"
+                {% if id %}
+                    disabled
+                {% endif %} />
+    </div>
+
+    <button
+            name="item-data"
+            data-id="{{ id }}"
+            data-name="{{ name }}"
+            data-start-time="{{ start_time }}"
+            data-end-time="{{ end_time }}"
+            data-description="{{ description }}"
+            data-image="{{ image }}"
+            data-entry-price="{{ entry_price }}"
+            data-max-entries="{{ max_entries }}"
+            onclick="submitChanges(this).then(alert)">
+        Submit Changes
+    </button>
+    <button
+            name="item-delete"
+            data-id="{{ id }}"
+            onclick="deleteItem(this).then(alert)">
+        Delete Item
+    </button>
+</div>
+{% endmacro %}
+
+
 {%- block content -%}
+<button onclick="addNewRaffle()">Add New Raffle</button>
+{% for r in raffles %}
+    {{
+        create_raffle(
+            r.id,
+            r.name,
+            r.start_time,
+            r.end_time,
+            r.description,
+            r.image,
+            r.entry_price,
+            r.max_entries,
+            r.ended,
+            r.deleted,
+        )
+    }}
+{% endfor %}
+
+
+<div id="templates" style="display: none;">
+    {{
+        create_raffle(
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            0,
+            1,
+            0,
+            0,
+        )
+    }}
+</div>
+
+<script type="text/javascript">
+/**
+ * Change the meta input for the leaderboard items.
+ * */
+function changeItemMeta(attr, inputNode) {
+    let id = inputNode.dataset.id;
+    let holder = inputNode.parentNode.parentNode;
+    let meta = holder.querySelector("button[name='item-data']");
+    meta.dataset[attr] = inputNode.value;
+}
+
+
+/**
+ * Submit changes to the API.
+ * */
+async function submitChanges(buttonNode) {
+    let raffleID = buttonNode.dataset.id;
+    let submitData = {
+        "id": raffleID,
+        "name": buttonNode.dataset.name,
+        "start_time": buttonNode.dataset.startTime,
+        "end_time": buttonNode.dataset.endTime,
+        "description": buttonNode.dataset.description,
+        "image": buttonNode.dataset.image,
+        "entry_price": parseInt(buttonNode.dataset.entryPrice),
+        "max_entries": parseInt(buttonNode.dataset.maxEntries),
+    }
+    buttonNode.classList.add("loading");
+    let site = await fetch(
+        "/api/raffle",
+        {
+            method: "PUT",
+            body: JSON.stringify(submitData),
+        },
+    );
+    let json = await site.json();
+    buttonNode.classList.remove("loading");
+
+    let holder = buttonNode.parentNode;
+    holder.querySelector(`input[name="max-entries"]`).disabled = true;
+    holder.querySelector(`input[name="entry-price"]`).disabled = true;
+    for(let i of holder.querySelectorAll("input, button")) {
+        i.dataset.id = json.data[0].id;
+    }
+    holder.querySelector(`input[name="start-time"]`).value = json.data[0]['start_time'];
+    holder.querySelector(`input[name="end-time"]`).value = json.data[0]['end_time'];
+
+    return json.message;
+}
+
+
+/**
+ * Delete a raffle item.
+ * */
+async function deleteItem(buttonNode) {
+    buttonNode.classList.add("loading");
+    let site = await fetch(
+        `/api/raffle/${buttonNode.dataset.id}`,
+        {
+            method: "DELETE",
+        },
+    );
+    buttonNode.classList.remove("loading");
+    let json = await site.json();
+    let block = buttonNode.parentNode;
+    block.style.display = "none";
+    return json.message;
+}
+
+
+/**
+ * Add a new raffle block to the page.
+ * */
+async function addNewRaffle() {
+    let newRaffleDOM = document.querySelector("#templates .raffle-item").cloneNode(true);
+    let addBefore = document.querySelector("#content .raffle-item");
+    let contentDOM = document.querySelector("#content");
+    let templatesDOM = document.querySelector("#templates")
+    if(addBefore) {
+        contentDOM.insertBefore(newRaffleDOM, addBefore);
+    }
+    else {
+        contentDOM.insertBefore(newRaffleDOM, templatesDOM);
+    }
+    alert("Added.");
+}
+</script>
 {%- endblock content -%}
+
