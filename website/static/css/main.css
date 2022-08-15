@@ -116,6 +116,14 @@ header .login span {
 
 .loading {
     font-size: 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading * {
+    display: none;
 }
 
 .loading::after {
@@ -125,7 +133,9 @@ header .login span {
     border: 2px solid var(--spinner-color);
     width: 0.8em;
     height: 0.8em;
-    display: inline-block;
+    display: block;
+    justify-self: center;
+    align-self: center;
     border-radius: 50%;
     border-top: 2px solid transparent;
     border-right: 2px solid transparent;
