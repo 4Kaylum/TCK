@@ -63,6 +63,14 @@ CREATE TABLE IF NOT EXISTS raffles(
 -- a given raffle.
 
 
+CREATE TABLE IF NOT EXISTS raffle_entries(
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    raffle_id UUID NOT NULL REFERENCES raffles(id),
+    user_id UUID NOT NULL REFERENCES users(id),
+    entry_time TIMESTAMP DEFAULT TIMEZONE('UTC', NOW())
+);
+
+
 CREATE TABLE IF NOT EXISTS leaderboards(
     index INTEGER PRIMARY KEY,
     name TEXT,

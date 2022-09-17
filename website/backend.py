@@ -330,3 +330,105 @@ async def delete_raffle(request: Request):
         "message": "Raffle deleted :3",
         "data": [],
     })
+
+
+@routes.post("/api/join/giveaway")
+async def post_join_giveaway(request: Request):
+    """
+    Allow a logged in user to join a giveaway.
+    """
+
+    # Get the json data from the request
+    data = await request.json()
+    session = await aiohttp_session.get_session(request)
+    if not session.get("user_info", {}).get("id"):
+        return json_response(
+            {
+                "message": "Not logged in.",
+                "data": [],
+            },
+            status=401,
+        )
+
+    # Add that to the database
+    async with vbu.Database() as db:
+
+        # Check they haven't already entered
+        entered_rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                raffle_entries
+            WHERE
+                user_id = $1
+            AND
+                raffle_id = $2
+            """,
+            session['user_info']['id'], data['id'],
+        )
+        if entered_rows:
+            return json_response(
+                {
+                    "message": "Already entered.",
+                    "data": [],
+                },
+                status=403,
+            )
+
+        # Check the ID refers to a giveaway
+        giveaway_rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                raffles
+            AND
+                id = $1
+            """,
+            data['id'],
+        )
+        if not giveaway_rows:
+            return json_response(
+                {
+                    "message": "Giveaway does not exist.",
+                    "data": [],
+                },
+                status=403,
+            )
+        elif not utils.Raffle(data=giveaway_rows[0]).is_giveaway:
+            return json_response(
+                {
+                    "message": "Raffle is not a giveaway.",
+                    "data": [],
+                },
+                status=403,
+            )
+
+        # Add their entry
+        entry_rows = await db.call(
+            """
+            INSERT INTO
+                raffle_entries
+                (
+                    raffle_id,
+                    user_id
+                )
+            VALUES
+                (
+                    $1,
+                    $2
+                )
+            RETURNING
+                *
+            """,
+            giveaway_rows[0]['id'], session['user_info']['id']
+        )
+
+    # And done
+    return json_response({
+        "message": "Added entry",
+        "data": [
+            dict(entry_rows[0]),
+        ],
+    })
