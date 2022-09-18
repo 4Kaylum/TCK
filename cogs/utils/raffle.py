@@ -43,7 +43,7 @@ class Raffle:
         '_end_time',
         'description',
         'image',
-        'entry_price',
+        '_entry_price',
         '_max_entries',
         'deleted',
     )
@@ -55,15 +55,25 @@ class Raffle:
         self._end_time: dt = data['end_time']
         self.description: Optional[str] = data['description']
         self.image: Optional[str] = data['image']
-        self.entry_price: Optional[int] = data['entry_price']
+        self._entry_price: Optional[int] = data['entry_price']
         self._max_entries: Optional[int] = data['max_entries']
         self.deleted: bool = data.get('deleted', False)
 
     @property
-    def max_entries(self) -> Optional[int]:
-        if self.entry_price is None or self.entry_price <= 0:
+    def max_entries(self) -> int:
+        if self._entry_price is None or self._entry_price <= 0:
+            return 1
+        if self._max_entries is None or self._max_entries < 0:
             return 1
         return self._max_entries
+
+    @property
+    def entry_price(self) -> int:
+        if self._entry_price is None or self._entry_price < 0:
+            return 0
+        if self._max_entries is None or self._max_entries < 0:
+            return 0
+        return self._entry_price
 
     @property
     def is_giveaway(self) -> bool:

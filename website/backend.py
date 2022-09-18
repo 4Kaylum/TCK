@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 from typing import Optional
 from urllib.parse import urlencode
+import json
 
 import aiohttp
 from aiohttp.web import HTTPFound, Request, Response, RouteTableDef, json_response
@@ -12,6 +13,11 @@ from cogs import utils
 
 
 routes = RouteTableDef()
+
+
+def streamelements(r: Request):
+    token = r.app['config']['streamelements']['token']
+    return utils.StreamElements(token)
 
 
 def try_parse_time(input_time: str, parse) -> Optional[dt]:
@@ -189,9 +195,17 @@ async def put_leaderboard(request: Request):
                 """
                 INSERT INTO
                     leaderboards
-                    (index, name, amount)
+                    (
+                        index,
+                        name,
+                        amount
+                    )
                 VALUES
-                    ($1, $2, $3)
+                    (
+                        $1,
+                        $2,
+                        $3
+                    )
                 ON CONFLICT
                     (index)
                 DO UPDATE
@@ -209,7 +223,7 @@ async def put_leaderboard(request: Request):
     return json_response({
         "message": "Leaderboards updated successfully! :3",
         "data": [
-            dict(i)
+            json.dumps(i, cls=utils.HTTPEncoder)
             for i in new_data
         ],
     })
@@ -290,14 +304,10 @@ async def put_raffle(request: Request):
         message = "Raffle created successfully! :3"
     else:
         message = "Raffle updated successfully! :3"
-    new_data = dict(new_rows[0])
-    new_data['id'] = str(new_data['id'])
-    new_data['start_time'] = new_data['start_time'].replace(microsecond=0).isoformat()
-    new_data['end_time'] = new_data['end_time'].replace(microsecond=0).isoformat()
     return json_response({
         "message": message,
         "data": [
-            new_data
+            json.dumps(new_rows[0], cls=utils.HTTPEncoder)
         ],
     })
 
@@ -332,14 +342,17 @@ async def delete_raffle(request: Request):
     })
 
 
-@routes.post("/api/join/giveaway")
-async def post_join_giveaway(request: Request):
+@routes.post("/api/join_raffle")
+async def post_join_raffle(request: Request):
     """
-    Allow a logged in user to join a giveaway.
+    Allow a logged in user to join a raffle.
     """
 
     # Get the json data from the request
-    data = await request.json()
+    try:
+        data = await request.json()
+    except:
+        data = {}
     session = await aiohttp_session.get_session(request)
     if not session.get("user_info", {}).get("id"):
         return json_response(
@@ -349,32 +362,17 @@ async def post_join_giveaway(request: Request):
             },
             status=401,
         )
+    if data.get("id") is None:
+        return json_response(
+            {
+                "message": "Missing ID from payload.",
+                "data": [],
+            },
+            status=400,
+        )
 
     # Add that to the database
     async with vbu.Database() as db:
-
-        # Check they haven't already entered
-        entered_rows = await db.call(
-            """
-            SELECT
-                *
-            FROM
-                raffle_entries
-            WHERE
-                user_id = $1
-            AND
-                raffle_id = $2
-            """,
-            session['user_info']['id'], data['id'],
-        )
-        if entered_rows:
-            return json_response(
-                {
-                    "message": "Already entered.",
-                    "data": [],
-                },
-                status=403,
-            )
 
         # Check the ID refers to a giveaway
         giveaway_rows = await db.call(
@@ -396,13 +394,51 @@ async def post_join_giveaway(request: Request):
                 },
                 status=403,
             )
-        elif not utils.Raffle(data=giveaway_rows[0]).is_giveaway:
+        raffle = utils.Raffle(data=giveaway_rows[0])
+
+        # Check their current entries
+        entered_rows = await db.call(
+            """
+            SELECT
+                *
+            FROM
+                raffle_entries
+            WHERE
+                user_id = $1
+            AND
+                raffle_id = $2
+            """,
+            session['user_info']['id'], data['id'],
+        )
+        if len(entered_rows) >= raffle.max_entries:
             return json_response(
                 {
-                    "message": "Raffle is not a giveaway.",
+                    "message": "Entered max amount of times already.",
                     "data": [],
                 },
                 status=403,
+            )
+
+        # See if any points are required to enter
+        if raffle.entry_price > 0:
+
+            # Check they have the required points to enter the raffle
+            se = streamelements(request)
+            twitch_username = session['user_info']['twitch_username']
+            points = await se.get_user_points(user=twitch_username)
+            if points.points < (raffle.entry_price or 0):
+                return json_response(
+                    {
+                        "message": "Not enough points to spend.",
+                        "data": [],
+                    },
+                    status=403,
+                )
+
+            # Remove number of points from their user
+            await se.modify_user_points(
+                user=twitch_username,
+                amount=-raffle.entry_price,
             )
 
         # Add their entry
@@ -429,6 +465,6 @@ async def post_join_giveaway(request: Request):
     return json_response({
         "message": "Added entry",
         "data": [
-            dict(entry_rows[0]),
+            json.dumps(entry_rows[0], cls=utils.HTTPEncoder)
         ],
     })
