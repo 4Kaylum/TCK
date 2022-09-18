@@ -384,7 +384,7 @@ async def post_join_raffle(request: Request):
             AND
                 id = $1
             AND
-                deleted = FALSE
+                deleted IS FALSE
             AND
                 end_time > TIMEZONE('UTC', NOW())
             """,
@@ -472,3 +472,40 @@ async def post_join_raffle(request: Request):
             json.dumps(entry_rows[0], cls=utils.HTTPEncoder)
         ],
     })
+
+
+@routes.get("/api/raffle_entries")
+async def get_raffle_entries(request: Request):
+    """
+    Get the raffle entries for the logged in user.
+    """
+
+    # Get the logged in user
+    session = await aiohttp_session.get_session(request)
+    if not session.get("user_info", {}).get("id"):
+        return json_response([])
+
+    # Open DB to check entries
+    async with vbu.Database() as db:
+
+        # Check their current entries
+        entered_rows = await db.call(
+            """
+            SELECT
+                raffle_id, COUNT(id)
+            FROM
+                raffle_entries
+            WHERE
+                user_id = $1
+            AND
+                deleted IS FALSE
+            AND
+                end_time > TIMEZONE('UTC', NOW())
+            GROUP BY
+                raffle_id
+            """,
+            session['user_info']['id'],
+        )
+
+    # And done
+    return json_response(json.dumps(entered_rows, cls=utils.HTTPEncoder))
