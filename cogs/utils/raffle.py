@@ -77,7 +77,7 @@ class Raffle:
 
     @property
     def is_giveaway(self) -> bool:
-        return self.entry_price in [None, 0]
+        return self.entry_price in [None, 0] or self.max_entries in [None, 0]
 
     @property
     def start_time(self) -> dt:
