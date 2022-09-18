@@ -3,8 +3,6 @@ import json
 from datetime import datetime
 import uuid
 
-import asyncpg
-
 
 __all__ = (
     'HTTPEncoder',
@@ -14,8 +12,6 @@ __all__ = (
 class HTTPEncoder(json.JSONEncoder):
 
     def default(self, o: Any) -> Any:
-        if isinstance(o, asyncpg.Record):
-            return self.encode(dict(o))
         if isinstance(o, datetime):
             return o.isoformat()
         elif isinstance(o, uuid.UUID):

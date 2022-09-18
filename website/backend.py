@@ -223,7 +223,7 @@ async def put_leaderboard(request: Request):
     return json_response({
         "message": "Leaderboards updated successfully! :3",
         "data": [
-            json.dumps(i, cls=utils.HTTPEncoder)
+            json.dumps(dict(i), cls=utils.HTTPEncoder)
             for i in new_data
         ],
     })
@@ -307,7 +307,7 @@ async def put_raffle(request: Request):
     return json_response({
         "message": message,
         "data": [
-            json.dumps(new_rows[0], cls=utils.HTTPEncoder)
+            json.dumps(dict(new_rows[0]), cls=utils.HTTPEncoder)
         ],
     })
 
@@ -469,7 +469,7 @@ async def post_join_raffle(request: Request):
     return json_response({
         "message": "Added entry",
         "data": [
-            json.dumps(entry_rows[0], cls=utils.HTTPEncoder)
+            json.dumps(dict(entry_rows[0]), cls=utils.HTTPEncoder)
         ],
     })
 
@@ -508,4 +508,4 @@ async def get_raffle_entries(request: Request):
         )
 
     # And done
-    return json_response(json.dumps(entered_rows, cls=utils.HTTPEncoder))
+    return json_response(json.dumps([dict(i) for i in entered_rows], cls=utils.HTTPEncoder))
