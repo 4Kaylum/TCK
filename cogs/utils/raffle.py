@@ -61,23 +61,25 @@ class Raffle:
 
     @property
     def max_entries(self) -> int:
-        if self._entry_price is None or self._entry_price <= 0:
+        if self.is_giveaway:
             return 1
-        if self._max_entries is None or self._max_entries < 0:
+        if self._max_entries is None:
+            return 1
+        elif self._max_entries < 0:
             return 1
         return self._max_entries
 
     @property
     def entry_price(self) -> int:
-        if self._entry_price is None or self._entry_price < 0:
+        if self._entry_price is None:
             return 0
-        if self._max_entries is None or self._max_entries < 0:
+        elif self._entry_price < 0:
             return 0
         return self._entry_price
 
     @property
     def is_giveaway(self) -> bool:
-        return self.entry_price in [None, 0] or self.max_entries in [None, 0]
+        return self.entry_price == 0
 
     @property
     def start_time(self) -> dt:
