@@ -8,7 +8,7 @@
 
 
 {% macro create_giveaway(giveaway) %}
-<div class="giveaway">
+<div class="giveaway" data-id="{{ giveaway.id }}">
     <img src="{{ static('/images/raffle_item_background.png') }}" class="background decoration" />
     <img src="{{ static('/images/raffle_item_border.png') }}" class="border decoration" />
     <img src="{{ giveaway.image }}" class="image" />
@@ -17,7 +17,7 @@
             <p class="name">{{ giveaway.name }}</p>
             <p class="description">{{ giveaway.description }}</p>
         </div>
-        <button>Join</button>
+        <button onclick="enter('{{ giveaway.id }}')">Join</button>
     </div>
 </div>
 {% endmacro %}
@@ -47,4 +47,24 @@
         {% endfor %}
     </div>
 </div>
+
+<script type="text/javascript">
+    async function enter(giveawayId) {
+
+        // Perform an API request to add them to the raffle
+        site = await fetch(
+            "/api/join_raffle",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    id: giveawayId,
+                }),
+            },
+        );
+
+        // Get the response
+        data = await site.json();
+        console.log(data);
+    }
+</script>
 {%- endblock content -%}
