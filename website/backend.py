@@ -381,7 +381,7 @@ async def post_join_raffle(request: Request):
                 *
             FROM
                 raffles
-            AND
+            WHERE
                 id = $1
             AND
                 deleted IS FALSE
