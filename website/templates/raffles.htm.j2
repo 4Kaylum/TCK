@@ -49,7 +49,20 @@
 </div>
 
 <script type="text/javascript">
+    function load(node) {
+        node.classList.add("loading");
+        node.disabled = true;
+    }
+
+    function unload(node) {
+        node.classList.remove("loading");
+        node.disabled = false;
+    }
+
     async function enter(giveawayId) {
+        // Set it to loading
+        n = document.querySelector(`.giveaway[data-id=${giveawayId}]`);
+        load(n);
 
         // Perform an API request to add them to the raffle
         site = await fetch(
@@ -65,6 +78,9 @@
         // Get the response
         data = await site.json();
         console.log(data);
+
+        // Set to unloading
+        unload(n);
     }
 </script>
 {%- endblock content -%}
