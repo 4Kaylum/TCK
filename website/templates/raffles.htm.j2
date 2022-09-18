@@ -61,7 +61,7 @@
 
     async function enter(giveawayId) {
         // Set it to loading
-        n = document.querySelector(`.giveaway[data-id=${giveawayId}]`);
+        n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
         load(n);
 
         // Perform an API request to add them to the raffle
