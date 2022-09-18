@@ -383,6 +383,10 @@ async def post_join_raffle(request: Request):
                 raffles
             AND
                 id = $1
+            AND
+                deleted = FALSE
+            AND
+                end_time > TIMEZONE('UTC', NOW())
             """,
             data['id'],
         )
