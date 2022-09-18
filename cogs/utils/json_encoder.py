@@ -15,7 +15,7 @@ class HTTPEncoder(json.JSONEncoder):
 
     def default(self, o: Any) -> Any:
         if isinstance(o, asyncpg.Record):
-            return super().default(dict(o))
+            return dict(o)
         if isinstance(o, datetime):
             return o.isoformat()
         elif isinstance(o, uuid.UUID):
