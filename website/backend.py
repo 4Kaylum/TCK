@@ -507,7 +507,7 @@ async def get_raffle_entries(request: Request):
         )
 
     # And done
-    if entered_rows:
+    if not entered_rows:
         return json_response({})
     return json_response(
         json.dumps(
