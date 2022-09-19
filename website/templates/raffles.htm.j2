@@ -133,7 +133,7 @@ async function get_entries(giveawayId) {
     }
 }
 
-document.onload = () => {
+window.onload = (event) => {
     for(i of document.querySelectorAll(".giveaway")) {
         gid = i.dataset.id;
         get_entries(gid);
