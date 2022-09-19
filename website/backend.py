@@ -2,7 +2,6 @@ from datetime import datetime as dt
 from typing import Optional
 from urllib.parse import urlencode
 import json
-import io
 
 import aiohttp
 from aiohttp.web import HTTPFound, Request, Response, RouteTableDef, json_response

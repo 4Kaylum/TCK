@@ -125,7 +125,7 @@ async function get_entries(giveawayId) {
     }
 
     // Disable button if max
-    if(count >= giveaway.dataset.max) {
+    if(count >= parseInt(giveaway.dataset.max)) {
         button.disabled = true;
     }
     else {
