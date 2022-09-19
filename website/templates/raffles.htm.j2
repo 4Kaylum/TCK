@@ -117,10 +117,11 @@ async function get_entries(giveawayId) {
     data = await site.json();
     count = data.count;
     if(count > 0) {
-        button.textContent = `${data.count} entries`;
+        button.textContent = `${data.count}x entry`;
     }
 
     // Disable button if max
+    button = giveaway.querySelector(`button`)
     if(count >= parseInt(giveaway.dataset.max)) {
         console.log(parseInt(giveaway.dataset.max));
         console.log(count);
