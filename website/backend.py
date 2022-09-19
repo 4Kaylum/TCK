@@ -501,8 +501,6 @@ async def get_raffle_entries(request: Request):
             AND
                 raffle_id = $2
             AND
-                deleted IS FALSE
-            AND
                 end_time > TIMEZONE('UTC', NOW())
             GROUP BY
                 raffle_id
