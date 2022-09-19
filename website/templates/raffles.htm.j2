@@ -68,7 +68,6 @@ function load(node) {
 
 function unload(node) {
     node.classList.remove("loading");
-    node.disabled = false;
 }
 
 async function enter(giveawayId) {
@@ -121,10 +120,7 @@ async function get_entries(giveawayId) {
     }
 
     // Disable button if max
-    button = document.querySelector(`.giveaway[data-id=${giveawayId}] button`)
     if(count >= parseInt(giveaway.dataset.max)) {
-        console.log(parseInt(giveaway.dataset.max));
-        console.log(count);
         button.disabled = true;
     }
     else {
