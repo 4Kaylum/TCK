@@ -62,63 +62,65 @@
 </div>
 
 <script type="text/javascript">
-    function load(node) {
-        node.classList.add("loading");
-        node.disabled = true;
+function load(node) {
+    node.classList.add("loading");
+    node.disabled = true;
+}
+
+function unload(node) {
+    node.classList.remove("loading");
+    node.disabled = false;
+}
+
+async function enter(giveawayId) {
+    // Set it to loading
+    n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
+    load(n);
+
+    // Perform an API request to add them to the raffle
+    site = await fetch(
+        "/api/join_raffle",
+        {
+            method: "POST",
+            body: JSON.stringify({
+                id: giveawayId,
+            }),
+        },
+    );
+
+    // Get the response
+    data = await site.json();
+    console.log(data);
+
+    // Set to unloading
+    get_entries(giveawayId).then(() => {
+        unload(n);
+    })
+}
+
+async function get_entries(giveawayId) {
+    // Set it to loading
+    n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
+
+    // Perform an API request to add them to the raffle
+    site = await fetch(
+        `/api/raffle_entries?id=${giveawayId}`,
+        {
+            method: "GET",
+        },
+    );
+
+    // Get the response
+    data = await site.json();
+    console.log(data);
+    if(data && data.count && data.count > 0) {
+        n.textContent = `${data.count} entries`;
     }
+}
 
-    function unload(node) {
-        node.classList.remove("loading");
-        node.disabled = false;
-    }
-
-    async function enter(giveawayId) {
-        // Set it to loading
-        n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
-        load(n);
-
-        // Perform an API request to add them to the raffle
-        site = await fetch(
-            "/api/join_raffle",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    id: giveawayId,
-                }),
-            },
-        );
-
-        // Get the response
-        data = await site.json();
-        console.log(data);
-
-        // Set to unloading
-        get_entries(giveawayId).then(() => {
-            unload(n);
-        })
-    }
-
-    async function get_entries(giveawayId) {
-        // Set it to loading
-        n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
-
-        // Perform an API request to add them to the raffle
-        site = await fetch(
-            "/api/raffle_entries",
-            {
-                method: "GET",
-                body: JSON.stringify({
-                    id: giveawayId,
-                }),
-            },
-        );
-
-        // Get the response
-        data = await site.json();
-        console.log(data);
-        if(data && data.count && data.count > 0) {
-            n.textContent = `${data.count} entries`;
-        }
-    }
+for(i of document.querySelectorAll(".giveaway")) {
+    gid = i.dataset.id;
+    get_entries(gid);
+}
 </script>
 {%- endblock content -%}

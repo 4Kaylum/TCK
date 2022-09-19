@@ -481,10 +481,7 @@ async def get_raffle_entries(request: Request):
     """
 
     # Get the json data from the request
-    try:
-        data = await request.json()
-    except:
-        data = {}
+    data = request.query or {}
 
     # Get the logged in user
     session = await aiohttp_session.get_session(request)
