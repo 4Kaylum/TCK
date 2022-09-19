@@ -480,15 +480,19 @@ async def get_raffle_entries(request: Request):
     Get the raffle entries for the logged in user.
     """
 
+    # Get the json data from the request
+    try:
+        data = await request.json()
+    except:
+        data = {}
+
     # Get the logged in user
     session = await aiohttp_session.get_session(request)
     if not session.get("user_info", {}).get("id"):
-        return json_response([])
+        return json_response({})
 
     # Open DB to check entries
     async with vbu.Database() as db:
-
-        # Check their current entries
         entered_rows = await db.call(
             """
             SELECT
@@ -498,14 +502,23 @@ async def get_raffle_entries(request: Request):
             WHERE
                 user_id = $1
             AND
+                raffle_id = $2
+            AND
                 deleted IS FALSE
             AND
                 end_time > TIMEZONE('UTC', NOW())
             GROUP BY
                 raffle_id
             """,
-            session['user_info']['id'],
+            session['user_info']['id'], data.get("id", "")
         )
 
     # And done
-    return json_response(json.dumps([dict(i) for i in entered_rows], cls=utils.HTTPEncoder))
+    if entered_rows:
+        return json_response({})
+    return json_response(
+        json.dumps(
+            dict(entered_rows[0]),
+            cls=utils.HTTPEncoder,
+        )
+    )

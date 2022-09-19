@@ -15,9 +15,22 @@
     <div class="text">
         <div class="metadata">
             <p class="name">{{ giveaway.name }}</p>
-            <p class="description">{{ giveaway.description }}</p>
+            <p class="description">
+                {{ giveaway.description }}
+                <br />
+                {% if giveaway.entry_price == 0 %}
+                    Free Entry
+                {% else %}
+                    Entry: {{ giveaway.entry_price }} points
+                {% endif %}
+            </p>
         </div>
-        <button onclick="enter('{{ giveaway.id }}')">Join</button>
+        <button
+                onload="get_entries('{{ giveaway.id }}')"
+                onclick="enter('{{ giveaway.id }}')"
+                >
+            Join
+        </button>
     </div>
 </div>
 {% endmacro %}
@@ -80,7 +93,32 @@
         console.log(data);
 
         // Set to unloading
-        unload(n);
+        get_entries(giveawayId).then(() => {
+            unload(n);
+        })
+    }
+
+    async function get_entries(giveawayId) {
+        // Set it to loading
+        n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
+
+        // Perform an API request to add them to the raffle
+        site = await fetch(
+            "/api/raffle_entries",
+            {
+                method: "GET",
+                body: JSON.stringify({
+                    id: giveawayId,
+                }),
+            },
+        );
+
+        // Get the response
+        data = await site.json();
+        console.log(data);
+        if(data && data.count && data.count > 0) {
+            n.textContent = `${data.count} entries`;
+        }
     }
 </script>
 {%- endblock content -%}
