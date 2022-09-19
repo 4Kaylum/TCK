@@ -84,7 +84,6 @@
     text-align: center;
 }
 
-.giveaway button[disabled],
 .giveaway button {
     color: inherit;
 }
@@ -92,6 +91,10 @@
 .giveaway button:hover {
     background: lightgreen;
     cursor: pointer;
+}
+
+.giveaway button[disabled] {
+    color: lightgray;
 }
 
 .giveaway button[disabled]:hover {

@@ -27,7 +27,6 @@
         </div>
         <button
                 onclick="enter('{{ giveaway.id }}')"
-                disabled
                 >
             Join
         </button>
@@ -134,7 +133,7 @@ async function get_entries(giveawayId) {
     }
 }
 
-setTimeout(() => {
+document.onload = () => {
         for(i of document.querySelectorAll(".giveaway")) {
             gid = i.dataset.id;
             get_entries(gid);
