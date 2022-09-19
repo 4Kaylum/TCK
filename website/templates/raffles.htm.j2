@@ -122,6 +122,8 @@ async function get_entries(giveawayId) {
 
     // Disable button if max
     if(count >= parseInt(giveaway.dataset.max)) {
+        console.log(parseInt(giveaway.dataset.max));
+        console.log(count);
         button.disabled = true;
     }
     else {
