@@ -134,12 +134,10 @@ async function get_entries(giveawayId) {
 }
 
 document.onload = () => {
-        for(i of document.querySelectorAll(".giveaway")) {
-            gid = i.dataset.id;
-            get_entries(gid);
-        }
-    },
-    1_000
-);
+    for(i of document.querySelectorAll(".giveaway")) {
+        gid = i.dataset.id;
+        get_entries(gid);
+    }
+}
 </script>
 {%- endblock content -%}
