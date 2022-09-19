@@ -500,8 +500,6 @@ async def get_raffle_entries(request: Request):
                 user_id = $1
             AND
                 raffle_id = $2
-            AND
-                end_time > TIMEZONE('UTC', NOW())
             GROUP BY
                 raffle_id
             """,
