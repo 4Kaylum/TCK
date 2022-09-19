@@ -2,6 +2,7 @@ from datetime import datetime as dt
 from typing import Optional
 from urllib.parse import urlencode
 import json
+import io
 
 import aiohttp
 from aiohttp.web import HTTPFound, Request, Response, RouteTableDef, json_response
@@ -510,8 +511,6 @@ async def get_raffle_entries(request: Request):
     if not entered_rows:
         return json_response({})
     return json_response(
-        json.dumps(
-            dict(entered_rows[0]),
-            cls=utils.HTTPEncoder,
-        )
+        dict(entered_rows[0]),
+        dumps=utils.HTTPEncoder().encode,
     )

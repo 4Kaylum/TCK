@@ -8,7 +8,7 @@
 
 
 {% macro create_giveaway(giveaway) %}
-<div class="giveaway" data-id="{{ giveaway.id }}">
+<div class="giveaway" data-id="{{ giveaway.id }}" data-max="{{ giveaway.max_entries }}">
     <img src="{{ static('/images/raffle_item_background.png') }}" class="background decoration" />
     <img src="{{ static('/images/raffle_item_border.png') }}" class="border decoration" />
     <img src="{{ giveaway.image }}" class="image" />
@@ -90,7 +90,10 @@ async function enter(giveawayId) {
 
     // Get the response
     data = await site.json();
-    console.log(data);
+    alert(data.message);
+    if(site.status < 200 && site.status > 299) {
+        return;
+    }
 
     // Set to unloading
     get_entries(giveawayId).then(() => {
@@ -100,7 +103,8 @@ async function enter(giveawayId) {
 
 async function get_entries(giveawayId) {
     // Set it to loading
-    n = document.querySelector(`.giveaway[data-id=${giveawayId}] button`);
+    giveaway = document.querySelector(`.giveaway[data-id=${giveawayId}]`);
+    button = giveaway.querySelector(`button`);
 
     // Perform an API request to add them to the raffle
     site = await fetch(
@@ -112,9 +116,17 @@ async function get_entries(giveawayId) {
 
     // Get the response
     data = await site.json();
-    console.log(data);
     if(data && data.count && data.count > 0) {
-        n.textContent = `${data.count} entries`;
+        button.textContent = `${data.count} entries`;
+        count = data.count;
+    }
+    else {
+        count = 0;
+    }
+
+    // Disable button if max
+    if(count >= giveaway.dataset.max) {
+        button.disabled = true;
     }
 }
 
