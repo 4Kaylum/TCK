@@ -26,8 +26,8 @@
             </p>
         </div>
         <button
-                onload="get_entries('{{ giveaway.id }}')"
                 onclick="enter('{{ giveaway.id }}')"
+                disabled
                 >
             Join
         </button>
@@ -121,18 +121,26 @@ async function get_entries(giveawayId) {
         count = data.count;
     }
     else {
-        count = 0;
+        button.disabled = true;
+        return;
     }
 
     // Disable button if max
     if(count >= giveaway.dataset.max) {
         button.disabled = true;
     }
+    else {
+        button.disabled = false;
+    }
 }
 
-for(i of document.querySelectorAll(".giveaway")) {
-    gid = i.dataset.id;
-    get_entries(gid);
-}
+setTimeout(() => {
+        for(i of document.querySelectorAll(".giveaway")) {
+            gid = i.dataset.id;
+            get_entries(gid);
+        }
+    },
+    500
+);
 </script>
 {%- endblock content -%}
