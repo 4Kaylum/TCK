@@ -115,13 +115,9 @@ async function get_entries(giveawayId) {
 
     // Get the response
     data = await site.json();
-    if(data && data.count && data.count > 0) {
+    count = data.count;
+    if(count > 0) {
         button.textContent = `${data.count} entries`;
-        count = data.count;
-    }
-    else {
-        button.disabled = true;
-        return;
     }
 
     // Disable button if max
