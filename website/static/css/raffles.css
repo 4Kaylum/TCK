@@ -91,6 +91,13 @@
 
 .giveaway button:hover {
     background: lightgreen;
+    cursor: pointer;
+}
+
+.giveaway button[disabled]:hover {
+    background: var(--primary-blue);
+    color: lightgray;
+    cursor: not-allowed;
 }
 
 @media screen and (max-width: 770px) {
