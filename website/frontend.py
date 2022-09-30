@@ -45,10 +45,10 @@ async def leaderboard(_: Request):
     }
 
 
-@routes.get("/raffles")
-@template("raffles.htm.j2")
+@routes.get("/giveaways")
+@template("giveaways.htm.j2")
 @utils.add_standard_args()
-async def raffles(_: Request):
+async def giveaways(_: Request):
     """
     Grab all of the data for the raffles page, allowing users to
     enter each raffle or giveaway.
@@ -171,11 +171,11 @@ async def admin_leaderboard(_: Request):
     }
 
 
-@routes.get("/admin/raffles")
-@template("admin/raffles.htm.j2")
+@routes.get("/admin/giveaways")
+@template("admin/giveaways.htm.j2")
 @utils.requires_permission(admin_panel=True)
 @utils.add_standard_args()
-async def admin_raffles(_: Request):
+async def admin_giveaways(_: Request):
     async with vbu.Database() as db:
         rows = await db.call(
             """
