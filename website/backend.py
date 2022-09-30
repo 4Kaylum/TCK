@@ -47,6 +47,8 @@ def json_encode(item: dict) -> dict: ...
 def json_encode(item: list) -> list: ...
 
 def json_encode(item: Union[dict, list]) -> Union[dict, list]:
+    if isinstance(item, asyncpg.Record):
+        item = dict(item)
     return json.loads(json.dumps(item, cls=utils.HTTPEncoder))
 
 
