@@ -54,3 +54,7 @@
 #content button[name="item-delete"] {
     --button-colour: hsl(0, 100%, 75%);  /* A nice red */
 }
+
+#content button[name="item-winner"] {
+    --button-colour: hsl(179, 88%, 45%);  /* A nice blue */
+}

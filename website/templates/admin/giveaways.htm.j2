@@ -278,7 +278,7 @@ async function getWinner(buttonNode) {
     );
     buttonNode.classList.remove("loading");
     let json = await site.json();
-    return json.message;
+    return JSON.stringify(json.message);
 }
 </script>
 {%- endblock content -%}
