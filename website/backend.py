@@ -1,5 +1,5 @@
 from datetime import datetime as dt
-from typing import Optional
+from typing import Optional, Union, overload
 from urllib.parse import urlencode
 import json
 
@@ -39,6 +39,15 @@ def parse_time(input_time: str) -> dt:
         if t:
             return t
     raise TypeError()
+
+
+@overload
+def json_encode(item: dict) -> dict: ...
+@overload
+def json_encode(item: list) -> list: ...
+
+def json_encode(item: Union[dict, list]) -> Union[dict, list]:
+    return json.loads(json.dumps(item, cls=utils.HTTPEncoder))
 
 
 @routes.get("/login_processor/discord")
@@ -223,7 +232,7 @@ async def put_leaderboard(request: Request):
     return json_response({
         "message": "Leaderboards updated successfully! :3",
         "data": [
-            json.dumps(dict(i), cls=utils.HTTPEncoder)
+            json_encode(dict(i))
             for i in new_data
         ],
     })
@@ -307,7 +316,7 @@ async def put_raffle(request: Request):
     return json_response({
         "message": message,
         "data": [
-            json.dumps(dict(new_rows[0]), cls=utils.HTTPEncoder)
+            json_encode(dict(new_rows[0])),
         ],
     })
 
@@ -469,7 +478,7 @@ async def post_join_raffle(request: Request):
     return json_response({
         "message": "Added entry",
         "data": [
-            json.dumps(dict(entry_rows[0]), cls=utils.HTTPEncoder)
+            json_encode(dict(entry_rows[0])),
         ],
     })
 
