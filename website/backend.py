@@ -522,3 +522,46 @@ async def get_raffle_entries(request: Request):
         dict(entered_rows[0]),
         dumps=utils.HTTPEncoder().encode,
     )
+
+
+@routes.get("/api/raffle_winner")
+@utils.requires_permission(admin_panel=True)
+async def get_raffle_winner(request: Request):
+    """
+    Get the raffle entries for the logged in user.
+    """
+
+    # Get the json data from the request
+    data = request.query or {}
+
+    # Open DB to check entries
+    async with vbu.Database() as db:
+        entered_rows = await db.call(
+            """
+            SELECT
+                twitch_username,
+                raffle_entries.user_id
+            FROM
+                raffle_entries
+            LEFT JOIN
+                users
+            ON
+                users.id = raffle_entries.user_id
+            WHERE
+                raffle_id = $1
+            ORDER BY
+                RANDOM()
+            LIMIT
+                1
+            """,
+            data.get("id", "")
+        )
+
+    # And done
+    if not entered_rows:
+        return json_response({})
+    return json_response(
+        {
+            "message": json_encode(entered_rows[0])
+        }
+    )

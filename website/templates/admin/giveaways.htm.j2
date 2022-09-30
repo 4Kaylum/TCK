@@ -133,6 +133,12 @@
             onclick="deleteItem(this).then(alert)">
         Delete Item
     </button>
+    <button
+            name="item-winner"
+            data-id="{{ id }}"
+            onclick="getWinner(this).then(alert)">
+        Get Winner
+    </button>
 </div>
 {% endmacro %}
 
@@ -259,6 +265,20 @@ async function addNewRaffle() {
         contentDOM.insertBefore(newRaffleDOM, templatesDOM);
     }
     alert("Added.");
+}
+
+
+/**
+ * Ask the API for a potential giveaway winner
+ * */
+async function getWinner(buttonNode) {
+    buttonNode.classList.add("loading");
+    let site = await fetch(
+        `/api/raffle_winner?id=${buttonNode.dataset.id}`
+    );
+    buttonNode.classList.remove("loading");
+    let json = await site.json();
+    return json.message;
 }
 </script>
 {%- endblock content -%}
