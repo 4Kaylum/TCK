@@ -278,7 +278,7 @@ async function getWinner(buttonNode) {
     );
     buttonNode.classList.remove("loading");
     let json = await site.json();
-    return JSON.stringify(json.message, null, 4);
+    return json.message['twitch_username'];
 }
 </script>
 {%- endblock content -%}
